@@ -13,18 +13,85 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class SubmitRecordController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('submit_record_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $submitRecords = SubmitRecord::with(['media'])->get();
+        if ($request->ajax()) {
+            $query = SubmitRecord::query()->select(sprintf('%s.*', (new SubmitRecord)->table));
+            $table = Datatables::of($query);
 
-        return view('admin.submitRecords.index', compact('submitRecords'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'submit_record_show';
+                $editGate      = 'submit_record_edit';
+                $deleteGate    = 'submit_record_delete';
+                $crudRoutePart = 'submit-records';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('role', function ($row) {
+                return $row->role ? $row->role : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+            $table->editColumn('agency_affiliation', function ($row) {
+                return $row->agency_affiliation ? $row->agency_affiliation : '';
+            });
+            $table->editColumn('address', function ($row) {
+                return $row->address ? $row->address : '';
+            });
+            $table->editColumn('image', function ($row) {
+                if (! $row->image) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->image as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
+                }
+
+                return implode(' ', $links);
+            });
+            $table->editColumn('files', function ($row) {
+                if (! $row->files) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->files as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+            $table->editColumn('narrative', function ($row) {
+                return $row->narrative ? $row->narrative : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'image', 'files']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.submitRecords.index');
     }
 
     public function create()

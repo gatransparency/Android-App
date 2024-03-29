@@ -9,10 +9,10 @@ class AddRelationshipFieldsToReportsTable extends Migration
     public function up()
     {
         Schema::table('reports', function (Blueprint $table) {
-            $table->unsignedBigInteger('gtnn_number_id')->nullable();
-            $table->foreign('gtnn_number_id', 'gtnn_number_fk_9232840')->references('id')->on('public_officials');
             $table->unsignedBigInteger('agency_id')->nullable();
-            $table->foreign('agency_id', 'agency_fk_9242283')->references('id')->on('agencies_offices');
+            $table->foreign('agency_id', 'agency_fk_9644363')->references('id')->on('agencies_offices');
+            $table->unsignedBigInteger('official_number_id')->nullable();
+            $table->foreign('official_number_id', 'official_number_fk_9644374')->references('id')->on('public_officials');
         });
     }
 }

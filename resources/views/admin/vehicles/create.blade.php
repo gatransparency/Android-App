@@ -10,6 +10,34 @@
         <form method="POST" action="{{ route("admin.vehicles.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label class="required" for="agency_id">{{ trans('cruds.vehicle.fields.agency') }}</label>
+                <select class="form-control select2 {{ $errors->has('agency') ? 'is-invalid' : '' }}" name="agency_id" id="agency_id" required>
+                    @foreach($agencies as $id => $entry)
+                        <option value="{{ $id }}" {{ old('agency_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('agency'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('agency') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.vehicle.fields.agency_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="public_official_id">{{ trans('cruds.vehicle.fields.public_official') }}</label>
+                <select class="form-control select2 {{ $errors->has('public_official') ? 'is-invalid' : '' }}" name="public_official_id" id="public_official_id">
+                    @foreach($public_officials as $id => $entry)
+                        <option value="{{ $id }}" {{ old('public_official_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('public_official'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('public_official') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.vehicle.fields.public_official_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="image">{{ trans('cruds.vehicle.fields.image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}" id="image-dropzone">
                 </div>
@@ -21,46 +49,8 @@
                 <span class="help-block">{{ trans('cruds.vehicle.fields.image_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="gtnn_number_id">{{ trans('cruds.vehicle.fields.gtnn_number') }}</label>
-                <select class="form-control select2 {{ $errors->has('gtnn_number') ? 'is-invalid' : '' }}" name="gtnn_number_id" id="gtnn_number_id" required>
-                    @foreach($gtnn_numbers as $id => $entry)
-                        <option value="{{ $id }}" {{ old('gtnn_number_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('gtnn_number'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('gtnn_number') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.gtnn_number_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="agency_vehicle_id">{{ trans('cruds.vehicle.fields.agency_vehicle') }}</label>
-                <select class="form-control select2 {{ $errors->has('agency_vehicle') ? 'is-invalid' : '' }}" name="agency_vehicle_id" id="agency_vehicle_id" required>
-                    @foreach($agency_vehicles as $id => $entry)
-                        <option value="{{ $id }}" {{ old('agency_vehicle_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('agency_vehicle'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('agency_vehicle') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.agency_vehicle_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="year">{{ trans('cruds.vehicle.fields.year') }}</label>
-                <input class="form-control {{ $errors->has('year') ? 'is-invalid' : '' }}" type="text" name="year" id="year" value="{{ old('year', '') }}" required>
-                @if($errors->has('year'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('year') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.year_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="make">{{ trans('cruds.vehicle.fields.make') }}</label>
-                <input class="form-control {{ $errors->has('make') ? 'is-invalid' : '' }}" type="text" name="make" id="make" value="{{ old('make', '') }}" required>
+                <label for="make">{{ trans('cruds.vehicle.fields.make') }}</label>
+                <input class="form-control {{ $errors->has('make') ? 'is-invalid' : '' }}" type="text" name="make" id="make" value="{{ old('make', '') }}">
                 @if($errors->has('make'))
                     <div class="invalid-feedback">
                         {{ $errors->first('make') }}
@@ -69,8 +59,8 @@
                 <span class="help-block">{{ trans('cruds.vehicle.fields.make_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="model">{{ trans('cruds.vehicle.fields.model') }}</label>
-                <input class="form-control {{ $errors->has('model') ? 'is-invalid' : '' }}" type="text" name="model" id="model" value="{{ old('model', '') }}" required>
+                <label for="model">{{ trans('cruds.vehicle.fields.model') }}</label>
+                <input class="form-control {{ $errors->has('model') ? 'is-invalid' : '' }}" type="text" name="model" id="model" value="{{ old('model', '') }}">
                 @if($errors->has('model'))
                     <div class="invalid-feedback">
                         {{ $errors->first('model') }}
@@ -79,8 +69,28 @@
                 <span class="help-block">{{ trans('cruds.vehicle.fields.model_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required">{{ trans('cruds.vehicle.fields.marked') }}</label>
-                <select class="form-control {{ $errors->has('marked') ? 'is-invalid' : '' }}" name="marked" id="marked" required>
+                <label for="year">{{ trans('cruds.vehicle.fields.year') }}</label>
+                <input class="form-control {{ $errors->has('year') ? 'is-invalid' : '' }}" type="text" name="year" id="year" value="{{ old('year', '') }}">
+                @if($errors->has('year'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('year') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.vehicle.fields.year_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="number">{{ trans('cruds.vehicle.fields.number') }}</label>
+                <input class="form-control {{ $errors->has('number') ? 'is-invalid' : '' }}" type="text" name="number" id="number" value="{{ old('number', '') }}">
+                @if($errors->has('number'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('number') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.vehicle.fields.number_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label>{{ trans('cruds.vehicle.fields.marked') }}</label>
+                <select class="form-control {{ $errors->has('marked') ? 'is-invalid' : '' }}" name="marked" id="marked">
                     <option value disabled {{ old('marked', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\Vehicle::MARKED_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('marked', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -92,66 +102,6 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.vehicle.fields.marked_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required">{{ trans('cruds.vehicle.fields.style') }}</label>
-                <select class="form-control {{ $errors->has('style') ? 'is-invalid' : '' }}" name="style" id="style" required>
-                    <option value disabled {{ old('style', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\Vehicle::STYLE_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('style', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('style'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('style') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.style_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required">{{ trans('cruds.vehicle.fields.condition') }}</label>
-                <select class="form-control {{ $errors->has('condition') ? 'is-invalid' : '' }}" name="condition" id="condition" required>
-                    <option value disabled {{ old('condition', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\Vehicle::CONDITION_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('condition', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('condition'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('condition') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.condition_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="plate_number">{{ trans('cruds.vehicle.fields.plate_number') }}</label>
-                <input class="form-control {{ $errors->has('plate_number') ? 'is-invalid' : '' }}" type="text" name="plate_number" id="plate_number" value="{{ old('plate_number', '') }}">
-                @if($errors->has('plate_number'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('plate_number') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.plate_number_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="vehicle_number">{{ trans('cruds.vehicle.fields.vehicle_number') }}</label>
-                <input class="form-control {{ $errors->has('vehicle_number') ? 'is-invalid' : '' }}" type="text" name="vehicle_number" id="vehicle_number" value="{{ old('vehicle_number', '') }}">
-                @if($errors->has('vehicle_number'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('vehicle_number') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.vehicle_number_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="notes">{{ trans('cruds.vehicle.fields.notes') }}</label>
-                <textarea class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" name="notes" id="notes">{{ old('notes') }}</textarea>
-                @if($errors->has('notes'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('notes') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vehicle.fields.notes_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -171,14 +121,14 @@
     var uploadedImageMap = {}
 Dropzone.options.imageDropzone = {
     url: '{{ route('admin.vehicles.storeMedia') }}',
-    maxFilesize: 25, // MB
+    maxFilesize: 50, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 25,
+      size: 50,
       width: 4096,
       height: 4096
     },

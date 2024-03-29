@@ -29,16 +29,13 @@
                         {{ trans('cruds.vehicle.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.vehicle.fields.agency') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.vehicle.fields.public_official') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.vehicle.fields.image') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.gtnn_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.agency_vehicle') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.year') }}
                     </th>
                     <th>
                         {{ trans('cruds.vehicle.fields.make') }}
@@ -47,95 +44,17 @@
                         {{ trans('cruds.vehicle.fields.model') }}
                     </th>
                     <th>
+                        {{ trans('cruds.vehicle.fields.year') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.vehicle.fields.number') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.vehicle.fields.marked') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.style') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.condition') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.plate_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.vehicle_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.vehicle.fields.notes') }}
                     </th>
                     <th>
                         &nbsp;
                     </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($public_officials as $key => $item)
-                                <option value="{{ $item->gtnn_number }}">{{ $item->gtnn_number }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($agencies_offices as $key => $item)
-                                <option value="{{ $item->agency_name }}">{{ $item->agency_name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search" strict="true">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Vehicle::MARKED_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search" strict="true">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Vehicle::STYLE_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search" strict="true">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Vehicle::CONDITION_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
                 </tr>
             </thead>
         </table>
@@ -190,18 +109,14 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'agency_agency_name', name: 'agency.agency_name' },
+{ data: 'public_official_public_official_number', name: 'public_official.public_official_number' },
 { data: 'image', name: 'image', sortable: false, searchable: false },
-{ data: 'gtnn_number_gtnn_number', name: 'gtnn_number.gtnn_number' },
-{ data: 'agency_vehicle_agency_name', name: 'agency_vehicle.agency_name' },
-{ data: 'year', name: 'year' },
 { data: 'make', name: 'make' },
 { data: 'model', name: 'model' },
+{ data: 'year', name: 'year' },
+{ data: 'number', name: 'number' },
 { data: 'marked', name: 'marked' },
-{ data: 'style', name: 'style' },
-{ data: 'condition', name: 'condition' },
-{ data: 'plate_number', name: 'plate_number' },
-{ data: 'vehicle_number', name: 'vehicle_number' },
-{ data: 'notes', name: 'notes' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -214,27 +129,6 @@
           .columns.adjust();
   });
   
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
 });
 
 </script>

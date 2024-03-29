@@ -26,7 +26,7 @@ class RecordsController extends Controller
         abort_if(Gate::denies('record_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Record::with(['gtnn_number', 'agency'])->select(sprintf('%s.*', (new Record)->table));
+            $query = Record::with(['agency', 'public_official'])->select(sprintf('%s.*', (new Record)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -71,34 +71,31 @@ class RecordsController extends Controller
             $table->editColumn('entered_by', function ($row) {
                 return $row->entered_by ? $row->entered_by : '';
             });
-            $table->addColumn('gtnn_number_gtnn_number', function ($row) {
-                return $row->gtnn_number ? $row->gtnn_number->gtnn_number : '';
-            });
-
             $table->addColumn('agency_agency_name', function ($row) {
                 return $row->agency ? $row->agency->agency_name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'record', 'gtnn_number', 'agency']);
+            $table->addColumn('public_official_public_official_number', function ($row) {
+                return $row->public_official ? $row->public_official->public_official_number : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'record', 'agency', 'public_official']);
 
             return $table->make(true);
         }
 
-        $public_officials = PublicOfficial::get();
-        $agencies_offices = AgenciesOffice::get();
-
-        return view('admin.records.index', compact('public_officials', 'agencies_offices'));
+        return view('admin.records.index');
     }
 
     public function create()
     {
         abort_if(Gate::denies('record_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.records.create', compact('agencies', 'gtnn_numbers'));
+        $public_officials = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.records.create', compact('agencies', 'public_officials'));
     }
 
     public function store(StoreRecordRequest $request)
@@ -120,13 +117,13 @@ class RecordsController extends Controller
     {
         abort_if(Gate::denies('record_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $record->load('gtnn_number', 'agency');
+        $public_officials = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.records.edit', compact('agencies', 'gtnn_numbers', 'record'));
+        $record->load('agency', 'public_official');
+
+        return view('admin.records.edit', compact('agencies', 'public_officials', 'record'));
     }
 
     public function update(UpdateRecordRequest $request, Record $record)
@@ -154,7 +151,7 @@ class RecordsController extends Controller
     {
         abort_if(Gate::denies('record_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $record->load('gtnn_number', 'agency');
+        $record->load('agency', 'public_official');
 
         return view('admin.records.show', compact('record'));
     }

@@ -25,6 +25,12 @@
                             {{ trans('cruds.record.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.record.fields.agency') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.record.fields.public_official') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.record.fields.date_added') }}
                         </th>
                         <th>
@@ -40,12 +46,6 @@
                             {{ trans('cruds.record.fields.entered_by') }}
                         </th>
                         <th>
-                            {{ trans('cruds.record.fields.gtnn_number') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.record.fields.agency') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -58,6 +58,12 @@
                             </td>
                             <td>
                                 {{ $record->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $record->agency->agency_name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $record->public_official->public_official_number ?? '' }}
                             </td>
                             <td>
                                 {{ $record->date_added ?? '' }}
@@ -77,12 +83,6 @@
                             </td>
                             <td>
                                 {{ $record->entered_by ?? '' }}
-                            </td>
-                            <td>
-                                {{ $record->gtnn_number->gtnn_number ?? '' }}
-                            </td>
-                            <td>
-                                {{ $record->agency->agency_name ?? '' }}
                             </td>
                             <td>
                                 @can('record_show')

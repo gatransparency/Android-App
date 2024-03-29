@@ -220,298 +220,258 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 53,
-                'title' => 'public_record_create',
-            ],
-            [
-                'id'    => 54,
-                'title' => 'public_record_edit',
-            ],
-            [
-                'id'    => 55,
-                'title' => 'public_record_show',
-            ],
-            [
-                'id'    => 56,
-                'title' => 'public_record_delete',
-            ],
-            [
-                'id'    => 57,
-                'title' => 'public_record_access',
-            ],
-            [
-                'id'    => 58,
                 'title' => 'submit_record_create',
             ],
             [
-                'id'    => 59,
+                'id'    => 54,
                 'title' => 'submit_record_edit',
             ],
             [
-                'id'    => 60,
+                'id'    => 55,
                 'title' => 'submit_record_show',
             ],
             [
-                'id'    => 61,
+                'id'    => 56,
                 'title' => 'submit_record_delete',
             ],
             [
-                'id'    => 62,
+                'id'    => 57,
                 'title' => 'submit_record_access',
             ],
             [
-                'id'    => 63,
+                'id'    => 58,
                 'title' => 'setting_access',
             ],
             [
-                'id'    => 64,
-                'title' => 'report_create',
-            ],
-            [
-                'id'    => 65,
-                'title' => 'report_edit',
-            ],
-            [
-                'id'    => 66,
-                'title' => 'report_show',
-            ],
-            [
-                'id'    => 67,
-                'title' => 'report_delete',
-            ],
-            [
-                'id'    => 68,
-                'title' => 'report_access',
-            ],
-            [
-                'id'    => 69,
-                'title' => 'vehicle_create',
-            ],
-            [
-                'id'    => 70,
-                'title' => 'vehicle_edit',
-            ],
-            [
-                'id'    => 71,
-                'title' => 'vehicle_show',
-            ],
-            [
-                'id'    => 72,
-                'title' => 'vehicle_delete',
-            ],
-            [
-                'id'    => 73,
-                'title' => 'vehicle_access',
-            ],
-            [
-                'id'    => 74,
-                'title' => 'public_official_create',
-            ],
-            [
-                'id'    => 75,
-                'title' => 'public_official_edit',
-            ],
-            [
-                'id'    => 76,
-                'title' => 'public_official_show',
-            ],
-            [
-                'id'    => 77,
-                'title' => 'public_official_delete',
-            ],
-            [
-                'id'    => 78,
-                'title' => 'public_official_access',
-            ],
-            [
-                'id'    => 79,
-                'title' => 'internal_investigation_create',
-            ],
-            [
-                'id'    => 80,
-                'title' => 'internal_investigation_edit',
-            ],
-            [
-                'id'    => 81,
-                'title' => 'internal_investigation_show',
-            ],
-            [
-                'id'    => 82,
-                'title' => 'internal_investigation_delete',
-            ],
-            [
-                'id'    => 83,
-                'title' => 'internal_investigation_access',
-            ],
-            [
-                'id'    => 84,
-                'title' => 'record_create',
-            ],
-            [
-                'id'    => 85,
-                'title' => 'record_edit',
-            ],
-            [
-                'id'    => 86,
-                'title' => 'record_show',
-            ],
-            [
-                'id'    => 87,
-                'title' => 'record_delete',
-            ],
-            [
-                'id'    => 88,
-                'title' => 'record_access',
-            ],
-            [
-                'id'    => 89,
+                'id'    => 59,
                 'title' => 'agencies_office_create',
             ],
             [
-                'id'    => 90,
+                'id'    => 60,
                 'title' => 'agencies_office_edit',
             ],
             [
-                'id'    => 91,
+                'id'    => 61,
                 'title' => 'agencies_office_show',
             ],
             [
-                'id'    => 92,
+                'id'    => 62,
                 'title' => 'agencies_office_delete',
             ],
             [
-                'id'    => 93,
+                'id'    => 63,
                 'title' => 'agencies_office_access',
             ],
             [
-                'id'    => 94,
+                'id'    => 64,
                 'title' => 'portal_version_create',
             ],
             [
-                'id'    => 95,
+                'id'    => 65,
                 'title' => 'portal_version_edit',
             ],
             [
-                'id'    => 96,
+                'id'    => 66,
                 'title' => 'portal_version_show',
             ],
             [
-                'id'    => 97,
+                'id'    => 67,
                 'title' => 'portal_version_delete',
             ],
             [
-                'id'    => 98,
+                'id'    => 68,
                 'title' => 'portal_version_access',
             ],
             [
-                'id'    => 99,
+                'id'    => 69,
                 'title' => 'bug_create',
             ],
             [
-                'id'    => 100,
+                'id'    => 70,
                 'title' => 'bug_edit',
             ],
             [
-                'id'    => 101,
+                'id'    => 71,
                 'title' => 'bug_show',
             ],
             [
-                'id'    => 102,
+                'id'    => 72,
                 'title' => 'bug_delete',
             ],
             [
-                'id'    => 103,
+                'id'    => 73,
                 'title' => 'bug_access',
             ],
             [
-                'id'    => 104,
+                'id'    => 74,
                 'title' => 'reportbug_create',
             ],
             [
-                'id'    => 105,
+                'id'    => 75,
                 'title' => 'reportbug_edit',
             ],
             [
-                'id'    => 106,
+                'id'    => 76,
                 'title' => 'reportbug_show',
             ],
             [
-                'id'    => 107,
+                'id'    => 77,
                 'title' => 'reportbug_delete',
             ],
             [
-                'id'    => 108,
+                'id'    => 78,
                 'title' => 'reportbug_access',
             ],
             [
-                'id'    => 109,
+                'id'    => 79,
                 'title' => 'portal_request_create',
             ],
             [
-                'id'    => 110,
+                'id'    => 80,
                 'title' => 'portal_request_edit',
             ],
             [
-                'id'    => 111,
+                'id'    => 81,
                 'title' => 'portal_request_show',
             ],
             [
-                'id'    => 112,
+                'id'    => 82,
                 'title' => 'portal_request_delete',
             ],
             [
-                'id'    => 113,
+                'id'    => 83,
                 'title' => 'portal_request_access',
             ],
             [
-                'id'    => 114,
+                'id'    => 84,
                 'title' => 'change_log_create',
             ],
             [
-                'id'    => 115,
+                'id'    => 85,
                 'title' => 'change_log_edit',
             ],
             [
-                'id'    => 116,
+                'id'    => 86,
                 'title' => 'change_log_show',
             ],
             [
-                'id'    => 117,
+                'id'    => 87,
                 'title' => 'change_log_delete',
             ],
             [
-                'id'    => 118,
+                'id'    => 88,
                 'title' => 'change_log_access',
             ],
             [
-                'id'    => 119,
+                'id'    => 89,
                 'title' => 'audit_log_show',
             ],
             [
-                'id'    => 120,
+                'id'    => 90,
                 'title' => 'audit_log_access',
             ],
             [
-                'id'    => 121,
-                'title' => 'public_official_data_create',
+                'id'    => 91,
+                'title' => 'public_official_create',
             ],
             [
-                'id'    => 122,
-                'title' => 'public_official_data_edit',
+                'id'    => 92,
+                'title' => 'public_official_edit',
             ],
             [
-                'id'    => 123,
-                'title' => 'public_official_data_show',
+                'id'    => 93,
+                'title' => 'public_official_show',
             ],
             [
-                'id'    => 124,
-                'title' => 'public_official_data_delete',
+                'id'    => 94,
+                'title' => 'public_official_delete',
             ],
             [
-                'id'    => 125,
-                'title' => 'public_official_data_access',
+                'id'    => 95,
+                'title' => 'public_official_access',
             ],
             [
-                'id'    => 126,
+                'id'    => 96,
+                'title' => 'report_create',
+            ],
+            [
+                'id'    => 97,
+                'title' => 'report_edit',
+            ],
+            [
+                'id'    => 98,
+                'title' => 'report_show',
+            ],
+            [
+                'id'    => 99,
+                'title' => 'report_delete',
+            ],
+            [
+                'id'    => 100,
+                'title' => 'report_access',
+            ],
+            [
+                'id'    => 101,
+                'title' => 'record_create',
+            ],
+            [
+                'id'    => 102,
+                'title' => 'record_edit',
+            ],
+            [
+                'id'    => 103,
+                'title' => 'record_show',
+            ],
+            [
+                'id'    => 104,
+                'title' => 'record_delete',
+            ],
+            [
+                'id'    => 105,
+                'title' => 'record_access',
+            ],
+            [
+                'id'    => 106,
+                'title' => 'vehicle_create',
+            ],
+            [
+                'id'    => 107,
+                'title' => 'vehicle_edit',
+            ],
+            [
+                'id'    => 108,
+                'title' => 'vehicle_show',
+            ],
+            [
+                'id'    => 109,
+                'title' => 'vehicle_delete',
+            ],
+            [
+                'id'    => 110,
+                'title' => 'vehicle_access',
+            ],
+            [
+                'id'    => 111,
+                'title' => 'internal_investigation_create',
+            ],
+            [
+                'id'    => 112,
+                'title' => 'internal_investigation_edit',
+            ],
+            [
+                'id'    => 113,
+                'title' => 'internal_investigation_show',
+            ],
+            [
+                'id'    => 114,
+                'title' => 'internal_investigation_delete',
+            ],
+            [
+                'id'    => 115,
+                'title' => 'internal_investigation_access',
+            ],
+            [
+                'id'    => 116,
                 'title' => 'profile_password_edit',
             ],
         ];

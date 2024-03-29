@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Record extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'records';
 
@@ -33,8 +34,8 @@ class Record extends Model implements HasMedia
         'full_name',
         'record_type',
         'entered_by',
-        'gtnn_number_id',
         'agency_id',
+        'public_official_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -66,13 +67,13 @@ class Record extends Model implements HasMedia
         return $this->getMedia('record');
     }
 
-    public function gtnn_number()
-    {
-        return $this->belongsTo(PublicOfficial::class, 'gtnn_number_id');
-    }
-
     public function agency()
     {
         return $this->belongsTo(AgenciesOffice::class, 'agency_id');
+    }
+
+    public function public_official()
+    {
+        return $this->belongsTo(PublicOfficial::class, 'public_official_id');
     }
 }

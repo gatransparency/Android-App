@@ -11,16 +11,6 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="gtnn_number">{{ trans('cruds.publicOfficial.fields.gtnn_number') }}</label>
-                <input class="form-control {{ $errors->has('gtnn_number') ? 'is-invalid' : '' }}" type="text" name="gtnn_number" id="gtnn_number" value="{{ old('gtnn_number', $publicOfficial->gtnn_number) }}" required>
-                @if($errors->has('gtnn_number'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('gtnn_number') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.gtnn_number_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="image">{{ trans('cruds.publicOfficial.fields.image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}" id="image-dropzone">
                 </div>
@@ -32,88 +22,88 @@
                 <span class="help-block">{{ trans('cruds.publicOfficial.fields.image_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.publicOfficial.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $publicOfficial->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.name_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="email">{{ trans('cruds.publicOfficial.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $publicOfficial->email) }}">
-                @if($errors->has('email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.email_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="current_agency_id">{{ trans('cruds.publicOfficial.fields.current_agency') }}</label>
-                <select class="form-control select2 {{ $errors->has('current_agency') ? 'is-invalid' : '' }}" name="current_agency_id" id="current_agency_id">
-                    @foreach($current_agencies as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('current_agency_id') ? old('current_agency_id') : $publicOfficial->current_agency->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <label class="required" for="agency_id">{{ trans('cruds.publicOfficial.fields.agency') }}</label>
+                <select class="form-control select2 {{ $errors->has('agency') ? 'is-invalid' : '' }}" name="agency_id" id="agency_id" required>
+                    @foreach($agencies as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('agency_id') ? old('agency_id') : $publicOfficial->agency->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('current_agency'))
+                @if($errors->has('agency'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('current_agency') }}
+                        {{ $errors->first('agency') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.current_agency_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.agency_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="hired">{{ trans('cruds.publicOfficial.fields.hired') }}</label>
-                <input class="form-control date {{ $errors->has('hired') ? 'is-invalid' : '' }}" type="text" name="hired" id="hired" value="{{ old('hired', $publicOfficial->hired) }}">
-                @if($errors->has('hired'))
+                <label class="required" for="public_official_number">{{ trans('cruds.publicOfficial.fields.public_official_number') }}</label>
+                <input class="form-control {{ $errors->has('public_official_number') ? 'is-invalid' : '' }}" type="text" name="public_official_number" id="public_official_number" value="{{ old('public_official_number', $publicOfficial->public_official_number) }}" required>
+                @if($errors->has('public_official_number'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('hired') }}
+                        {{ $errors->first('public_official_number') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.hired_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.public_official_number_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="badge_number">{{ trans('cruds.publicOfficial.fields.badge_number') }}</label>
-                <input class="form-control {{ $errors->has('badge_number') ? 'is-invalid' : '' }}" type="text" name="badge_number" id="badge_number" value="{{ old('badge_number', $publicOfficial->badge_number) }}">
-                @if($errors->has('badge_number'))
+                <label class="required" for="first_name">{{ trans('cruds.publicOfficial.fields.first_name') }}</label>
+                <input class="form-control {{ $errors->has('first_name') ? 'is-invalid' : '' }}" type="text" name="first_name" id="first_name" value="{{ old('first_name', $publicOfficial->first_name) }}" required>
+                @if($errors->has('first_name'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('badge_number') }}
+                        {{ $errors->first('first_name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.badge_number_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.first_name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="rank_position">{{ trans('cruds.publicOfficial.fields.rank_position') }}</label>
-                <input class="form-control {{ $errors->has('rank_position') ? 'is-invalid' : '' }}" type="text" name="rank_position" id="rank_position" value="{{ old('rank_position', $publicOfficial->rank_position) }}" required>
-                @if($errors->has('rank_position'))
+                <label for="middle_name">{{ trans('cruds.publicOfficial.fields.middle_name') }}</label>
+                <input class="form-control {{ $errors->has('middle_name') ? 'is-invalid' : '' }}" type="text" name="middle_name" id="middle_name" value="{{ old('middle_name', $publicOfficial->middle_name) }}">
+                @if($errors->has('middle_name'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('rank_position') }}
+                        {{ $errors->first('middle_name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.rank_position_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.middle_name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="hourly_rate">{{ trans('cruds.publicOfficial.fields.hourly_rate') }}</label>
-                <input class="form-control {{ $errors->has('hourly_rate') ? 'is-invalid' : '' }}" type="number" name="hourly_rate" id="hourly_rate" value="{{ old('hourly_rate', $publicOfficial->hourly_rate) }}" step="0.01">
-                @if($errors->has('hourly_rate'))
+                <label class="required" for="last_name">{{ trans('cruds.publicOfficial.fields.last_name') }}</label>
+                <input class="form-control {{ $errors->has('last_name') ? 'is-invalid' : '' }}" type="text" name="last_name" id="last_name" value="{{ old('last_name', $publicOfficial->last_name) }}" required>
+                @if($errors->has('last_name'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('hourly_rate') }}
+                        {{ $errors->first('last_name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.hourly_rate_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.last_name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="annual_salary">{{ trans('cruds.publicOfficial.fields.annual_salary') }}</label>
-                <input class="form-control {{ $errors->has('annual_salary') ? 'is-invalid' : '' }}" type="number" name="annual_salary" id="annual_salary" value="{{ old('annual_salary', $publicOfficial->annual_salary) }}" step="0.01">
-                @if($errors->has('annual_salary'))
+                <label for="badge_employee_number">{{ trans('cruds.publicOfficial.fields.badge_employee_number') }}</label>
+                <input class="form-control {{ $errors->has('badge_employee_number') ? 'is-invalid' : '' }}" type="text" name="badge_employee_number" id="badge_employee_number" value="{{ old('badge_employee_number', $publicOfficial->badge_employee_number) }}">
+                @if($errors->has('badge_employee_number'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('annual_salary') }}
+                        {{ $errors->first('badge_employee_number') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.annual_salary_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.badge_employee_number_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="sex">{{ trans('cruds.publicOfficial.fields.sex') }}</label>
+                <input class="form-control {{ $errors->has('sex') ? 'is-invalid' : '' }}" type="text" name="sex" id="sex" value="{{ old('sex', $publicOfficial->sex) }}">
+                @if($errors->has('sex'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('sex') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.sex_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="rank">{{ trans('cruds.publicOfficial.fields.rank') }}</label>
+                <input class="form-control {{ $errors->has('rank') ? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="{{ old('rank', $publicOfficial->rank) }}">
+                @if($errors->has('rank'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('rank') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.rank_helper') }}</span>
             </div>
             <div class="form-group">
                 <label>{{ trans('cruds.publicOfficial.fields.status') }}</label>
@@ -131,24 +121,44 @@
                 <span class="help-block">{{ trans('cruds.publicOfficial.fields.status_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="okey_number">{{ trans('cruds.publicOfficial.fields.okey_number') }}</label>
-                <input class="form-control {{ $errors->has('okey_number') ? 'is-invalid' : '' }}" type="text" name="okey_number" id="okey_number" value="{{ old('okey_number', $publicOfficial->okey_number) }}">
-                @if($errors->has('okey_number'))
+                <label for="officer_key_number">{{ trans('cruds.publicOfficial.fields.officer_key_number') }}</label>
+                <input class="form-control {{ $errors->has('officer_key_number') ? 'is-invalid' : '' }}" type="text" name="officer_key_number" id="officer_key_number" value="{{ old('officer_key_number', $publicOfficial->officer_key_number) }}">
+                @if($errors->has('officer_key_number'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('okey_number') }}
+                        {{ $errors->first('officer_key_number') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.okey_number_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.officer_key_number_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="years">{{ trans('cruds.publicOfficial.fields.years') }}</label>
-                <input class="form-control {{ $errors->has('years') ? 'is-invalid' : '' }}" type="text" name="years" id="years" value="{{ old('years', $publicOfficial->years) }}">
-                @if($errors->has('years'))
+                <label for="hired">{{ trans('cruds.publicOfficial.fields.hired') }}</label>
+                <input class="form-control date {{ $errors->has('hired') ? 'is-invalid' : '' }}" type="text" name="hired" id="hired" value="{{ old('hired', $publicOfficial->hired) }}">
+                @if($errors->has('hired'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('years') }}
+                        {{ $errors->first('hired') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.years_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.hired_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="years_in_profession">{{ trans('cruds.publicOfficial.fields.years_in_profession') }}</label>
+                <input class="form-control {{ $errors->has('years_in_profession') ? 'is-invalid' : '' }}" type="text" name="years_in_profession" id="years_in_profession" value="{{ old('years_in_profession', $publicOfficial->years_in_profession) }}">
+                @if($errors->has('years_in_profession'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('years_in_profession') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.years_in_profession_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="email">{{ trans('cruds.publicOfficial.fields.email') }}</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $publicOfficial->email) }}">
+                @if($errors->has('email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.email_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="phone_number">{{ trans('cruds.publicOfficial.fields.phone_number') }}</label>
@@ -161,84 +171,14 @@
                 <span class="help-block">{{ trans('cruds.publicOfficial.fields.phone_number_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="previous_employment">{{ trans('cruds.publicOfficial.fields.previous_employment') }}</label>
-                <textarea class="form-control {{ $errors->has('previous_employment') ? 'is-invalid' : '' }}" name="previous_employment" id="previous_employment">{{ old('previous_employment', $publicOfficial->previous_employment) }}</textarea>
-                @if($errors->has('previous_employment'))
+                <label for="previous_agency">{{ trans('cruds.publicOfficial.fields.previous_agency') }}</label>
+                <textarea class="form-control {{ $errors->has('previous_agency') ? 'is-invalid' : '' }}" name="previous_agency" id="previous_agency">{{ old('previous_agency', $publicOfficial->previous_agency) }}</textarea>
+                @if($errors->has('previous_agency'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('previous_employment') }}
+                        {{ $errors->first('previous_agency') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.previous_employment_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="professionalism">{{ trans('cruds.publicOfficial.fields.professionalism') }}</label>
-                <input class="form-control {{ $errors->has('professionalism') ? 'is-invalid' : '' }}" type="text" name="professionalism" id="professionalism" value="{{ old('professionalism', $publicOfficial->professionalism) }}">
-                @if($errors->has('professionalism'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('professionalism') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.professionalism_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="appearance">{{ trans('cruds.publicOfficial.fields.appearance') }}</label>
-                <input class="form-control {{ $errors->has('appearance') ? 'is-invalid' : '' }}" type="text" name="appearance" id="appearance" value="{{ old('appearance', $publicOfficial->appearance) }}">
-                @if($errors->has('appearance'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('appearance') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.appearance_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="uniform">{{ trans('cruds.publicOfficial.fields.uniform') }}</label>
-                <input class="form-control {{ $errors->has('uniform') ? 'is-invalid' : '' }}" type="text" name="uniform" id="uniform" value="{{ old('uniform', $publicOfficial->uniform) }}">
-                @if($errors->has('uniform'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('uniform') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.uniform_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="attitude">{{ trans('cruds.publicOfficial.fields.attitude') }}</label>
-                <input class="form-control {{ $errors->has('attitude') ? 'is-invalid' : '' }}" type="text" name="attitude" id="attitude" value="{{ old('attitude', $publicOfficial->attitude) }}">
-                @if($errors->has('attitude'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('attitude') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.attitude_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="law_knowledge">{{ trans('cruds.publicOfficial.fields.law_knowledge') }}</label>
-                <input class="form-control {{ $errors->has('law_knowledge') ? 'is-invalid' : '' }}" type="text" name="law_knowledge" id="law_knowledge" value="{{ old('law_knowledge', $publicOfficial->law_knowledge) }}">
-                @if($errors->has('law_knowledge'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('law_knowledge') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.law_knowledge_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="rights_violations">{{ trans('cruds.publicOfficial.fields.rights_violations') }}</label>
-                <input class="form-control {{ $errors->has('rights_violations') ? 'is-invalid' : '' }}" type="text" name="rights_violations" id="rights_violations" value="{{ old('rights_violations', $publicOfficial->rights_violations) }}">
-                @if($errors->has('rights_violations'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('rights_violations') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.rights_violations_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="if_yes">{{ trans('cruds.publicOfficial.fields.if_yes') }}</label>
-                <textarea class="form-control {{ $errors->has('if_yes') ? 'is-invalid' : '' }}" name="if_yes" id="if_yes">{{ old('if_yes', $publicOfficial->if_yes) }}</textarea>
-                @if($errors->has('if_yes'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('if_yes') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.publicOfficial.fields.if_yes_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.previous_agency_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="notes">{{ trans('cruds.publicOfficial.fields.notes') }}</label>
@@ -249,6 +189,16 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.publicOfficial.fields.notes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="accuracy">{{ trans('cruds.publicOfficial.fields.accuracy') }}</label>
+                <input class="form-control {{ $errors->has('accuracy') ? 'is-invalid' : '' }}" type="text" name="accuracy" id="accuracy" value="{{ old('accuracy', $publicOfficial->accuracy) }}" required>
+                @if($errors->has('accuracy'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('accuracy') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.publicOfficial.fields.accuracy_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="signature">{{ trans('cruds.publicOfficial.fields.signature') }}</label>
@@ -287,7 +237,7 @@
 <script>
     Dropzone.options.imageDropzone = {
     url: '{{ route('admin.public-officials.storeMedia') }}',
-    maxFilesize: 25, // MB
+    maxFilesize: 50, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -295,7 +245,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 25,
+      size: 50,
       width: 4096,
       height: 4096
     },

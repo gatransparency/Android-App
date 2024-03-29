@@ -10,6 +10,34 @@
         <form method="POST" action="{{ route("admin.records.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label class="required" for="agency_id">{{ trans('cruds.record.fields.agency') }}</label>
+                <select class="form-control select2 {{ $errors->has('agency') ? 'is-invalid' : '' }}" name="agency_id" id="agency_id" required>
+                    @foreach($agencies as $id => $entry)
+                        <option value="{{ $id }}" {{ old('agency_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('agency'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('agency') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.record.fields.agency_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="public_official_id">{{ trans('cruds.record.fields.public_official') }}</label>
+                <select class="form-control select2 {{ $errors->has('public_official') ? 'is-invalid' : '' }}" name="public_official_id" id="public_official_id" required>
+                    @foreach($public_officials as $id => $entry)
+                        <option value="{{ $id }}" {{ old('public_official_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('public_official'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('public_official') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.record.fields.public_official_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="date_added">{{ trans('cruds.record.fields.date_added') }}</label>
                 <input class="form-control date {{ $errors->has('date_added') ? 'is-invalid' : '' }}" type="text" name="date_added" id="date_added" value="{{ old('date_added') }}" required>
                 @if($errors->has('date_added'))
@@ -59,34 +87,6 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.record.fields.entered_by_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="gtnn_number_id">{{ trans('cruds.record.fields.gtnn_number') }}</label>
-                <select class="form-control select2 {{ $errors->has('gtnn_number') ? 'is-invalid' : '' }}" name="gtnn_number_id" id="gtnn_number_id" required>
-                    @foreach($gtnn_numbers as $id => $entry)
-                        <option value="{{ $id }}" {{ old('gtnn_number_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('gtnn_number'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('gtnn_number') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.record.fields.gtnn_number_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="agency_id">{{ trans('cruds.record.fields.agency') }}</label>
-                <select class="form-control select2 {{ $errors->has('agency') ? 'is-invalid' : '' }}" name="agency_id" id="agency_id" required>
-                    @foreach($agencies as $id => $entry)
-                        <option value="{{ $id }}" {{ old('agency_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('agency'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('agency') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.record.fields.agency_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

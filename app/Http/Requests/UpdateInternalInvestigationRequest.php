@@ -17,41 +17,26 @@ class UpdateInternalInvestigationRequest extends FormRequest
     public function rules()
     {
         return [
-            'ia_date' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
-            'gtnn_number_id' => [
+            'agency_id' => [
                 'required',
                 'integer',
             ],
-            'agency_office_id' => [
+            'public_official_id' => [
                 'required',
                 'integer',
-            ],
-            'name' => [
-                'string',
-                'min:2',
-                'max:50',
-                'required',
-            ],
-            'investigator' => [
-                'string',
-                'min:2',
-                'max:50',
-                'required',
             ],
             'narrative' => [
                 'required',
             ],
-            'files' => [
+            'file' => [
                 'array',
             ],
-            'entered_by' => [
-                'string',
-                'min:2',
-                'max:50',
+            'status' => [
                 'required',
+            ],
+            'entered_by_id' => [
+                'required',
+                'integer',
             ],
         ];
     }

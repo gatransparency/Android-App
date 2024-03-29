@@ -17,14 +17,6 @@ class StoreReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'gtnn_number_id' => [
-                'required',
-                'integer',
-            ],
-            'agency_id' => [
-                'required',
-                'integer',
-            ],
             'report_date' => [
                 'required',
                 'date_format:' . config('panel.date_format'),
@@ -35,19 +27,19 @@ class StoreReportRequest extends FormRequest
                 'max:50',
                 'required',
             ],
-            'date_of_occurance' => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
             'full_name' => [
                 'string',
                 'min:2',
                 'max:50',
                 'required',
             ],
+            'date_of_occurance' => [
+                'required',
+                'date_format:' . config('panel.date_format'),
+            ],
             'time' => [
+                'required',
                 'date_format:' . config('panel.time_format'),
-                'nullable',
             ],
             'location' => [
                 'string',
@@ -58,21 +50,9 @@ class StoreReportRequest extends FormRequest
             'narrative' => [
                 'required',
             ],
-            'report_status' => [
+            'official_number_id' => [
                 'required',
-            ],
-            'release' => [
-                'required',
-            ],
-            'admin_signature' => [
-                'string',
-                'min:2',
-                'max:75',
-                'required',
-            ],
-            'date_approved' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
+                'integer',
             ],
         ];
     }

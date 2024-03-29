@@ -17,42 +17,64 @@ class StorePublicOfficialRequest extends FormRequest
     public function rules()
     {
         return [
-            'gtnn_number' => [
+            'agency_id' => [
+                'required',
+                'integer',
+            ],
+            'public_official_number' => [
                 'string',
                 'min:2',
-                'max:100',
+                'max:50',
                 'required',
                 'unique:public_officials',
             ],
-            'name' => [
+            'first_name' => [
                 'string',
                 'min:2',
-                'max:100',
+                'max:25',
                 'required',
+            ],
+            'middle_name' => [
+                'string',
+                'min:2',
+                'max:25',
+                'nullable',
+            ],
+            'last_name' => [
+                'string',
+                'min:2',
+                'max:25',
+                'required',
+            ],
+            'badge_employee_number' => [
+                'string',
+                'min:2',
+                'max:25',
+                'nullable',
+            ],
+            'sex' => [
+                'string',
+                'min:2',
+                'max:10',
+                'nullable',
+            ],
+            'rank' => [
+                'string',
+                'min:2',
+                'max:25',
+                'nullable',
+            ],
+            'officer_key_number' => [
+                'string',
+                'min:2',
+                'max:25',
+                'nullable',
             ],
             'hired' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'badge_number' => [
-                'string',
-                'min:2',
-                'max:50',
-                'nullable',
-            ],
-            'rank_position' => [
-                'string',
-                'min:2',
-                'max:50',
-                'required',
-            ],
-            'okey_number' => [
-                'string',
-                'min:2',
-                'max:50',
-                'nullable',
-            ],
-            'years' => [
+            'years_in_profession' => [
                 'string',
                 'min:2',
                 'max:25',
@@ -61,54 +83,22 @@ class StorePublicOfficialRequest extends FormRequest
             'phone_number' => [
                 'string',
                 'min:2',
-                'max:50',
-                'nullable',
-            ],
-            'professionalism' => [
-                'string',
-                'min:1',
                 'max:25',
                 'nullable',
             ],
-            'appearance' => [
+            'accuracy' => [
                 'string',
-                'min:1',
-                'max:25',
-                'nullable',
-            ],
-            'uniform' => [
-                'string',
-                'min:1',
-                'max:25',
-                'nullable',
-            ],
-            'attitude' => [
-                'string',
-                'min:1',
-                'max:25',
-                'nullable',
-            ],
-            'law_knowledge' => [
-                'string',
-                'min:1',
-                'max:10',
-                'nullable',
-            ],
-            'rights_violations' => [
-                'string',
-                'min:1',
-                'max:10',
-                'nullable',
+                'required',
             ],
             'signature' => [
                 'string',
                 'min:2',
-                'max:50',
+                'max:25',
                 'required',
             ],
             'initials' => [
                 'string',
-                'min:1',
+                'min:2',
                 'max:10',
                 'required',
             ],

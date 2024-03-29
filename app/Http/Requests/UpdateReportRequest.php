@@ -17,15 +17,13 @@ class UpdateReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'gtnn_number_id' => [
-                'required',
-                'integer',
-            ],
-            'agency_id' => [
-                'required',
-                'integer',
-            ],
             'report_number' => [
+                'string',
+                'min:2',
+                'max:50',
+                'required',
+            ],
+            'full_name' => [
                 'string',
                 'min:2',
                 'max:50',
@@ -35,15 +33,9 @@ class UpdateReportRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'full_name' => [
-                'string',
-                'min:2',
-                'max:50',
-                'required',
-            ],
             'time' => [
+                'required',
                 'date_format:' . config('panel.time_format'),
-                'nullable',
             ],
             'location' => [
                 'string',
@@ -54,21 +46,9 @@ class UpdateReportRequest extends FormRequest
             'narrative' => [
                 'required',
             ],
-            'report_status' => [
+            'official_number_id' => [
                 'required',
-            ],
-            'release' => [
-                'required',
-            ],
-            'admin_signature' => [
-                'string',
-                'min:2',
-                'max:75',
-                'required',
-            ],
-            'date_approved' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
+                'integer',
             ],
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,12 +13,23 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Vehicle extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'vehicles';
 
     protected $appends = [
         'image',
+    ];
+
+    public static $searchable = [
+        'make',
+        'model',
+        'number',
+    ];
+
+    public const MARKED_SELECT = [
+        'yes' => 'Yes',
+        'no'  => 'No',
     ];
 
     protected $dates = [
@@ -26,39 +38,14 @@ class Vehicle extends Model implements HasMedia
         'deleted_at',
     ];
 
-    public const MARKED_SELECT = [
-        'Marked'    => 'Marked',
-        'Un-Marked' => 'Un-Marked',
-    ];
-
-    public const CONDITION_SELECT = [
-        'Good' => 'Good',
-        'Fair' => 'Fair',
-        'Poor' => 'Poor',
-    ];
-
-    public const STYLE_SELECT = [
-        'Sedan'      => 'Sedan',
-        'SUV'        => 'SUV',
-        'Bicycle'    => 'Bicycle',
-        'Motorcycle' => 'Motorcycle',
-        'Van'        => 'Van',
-        'Truck'      => 'Truck',
-        'Other'      => 'Other',
-    ];
-
     protected $fillable = [
-        'gtnn_number_id',
-        'agency_vehicle_id',
-        'year',
+        'agency_id',
+        'public_official_id',
         'make',
         'model',
+        'year',
+        'number',
         'marked',
-        'style',
-        'condition',
-        'plate_number',
-        'vehicle_number',
-        'notes',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -75,6 +62,16 @@ class Vehicle extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function agency()
+    {
+        return $this->belongsTo(AgenciesOffice::class, 'agency_id');
+    }
+
+    public function public_official()
+    {
+        return $this->belongsTo(PublicOfficial::class, 'public_official_id');
+    }
+
     public function getImageAttribute()
     {
         $files = $this->getMedia('image');
@@ -85,15 +82,5 @@ class Vehicle extends Model implements HasMedia
         });
 
         return $files;
-    }
-
-    public function gtnn_number()
-    {
-        return $this->belongsTo(PublicOfficial::class, 'gtnn_number_id');
-    }
-
-    public function agency_vehicle()
-    {
-        return $this->belongsTo(AgenciesOffice::class, 'agency_vehicle_id');
     }
 }

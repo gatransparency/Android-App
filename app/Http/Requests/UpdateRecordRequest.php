@@ -38,11 +38,11 @@ class UpdateRecordRequest extends FormRequest
                 'max:50',
                 'required',
             ],
-            'gtnn_number_id' => [
+            'agency_id' => [
                 'required',
                 'integer',
             ],
-            'agency_id' => [
+            'public_official_id' => [
                 'required',
                 'integer',
             ],

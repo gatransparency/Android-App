@@ -148,18 +148,8 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#current_agency_public_officials" role="tab" data-toggle="tab">
-                {{ trans('cruds.publicOfficial.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#agency_office_internal_investigations" role="tab" data-toggle="tab">
-                {{ trans('cruds.internalInvestigation.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#agency_vehicle_vehicles" role="tab" data-toggle="tab">
-                {{ trans('cruds.vehicle.title') }}
+            <a class="nav-link" href="#agency_reports" role="tab" data-toggle="tab">
+                {{ trans('cruds.report.title') }}
             </a>
         </li>
         <li class="nav-item">
@@ -168,34 +158,36 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#agency_reports" role="tab" data-toggle="tab">
-                {{ trans('cruds.report.title') }}
+            <a class="nav-link" href="#agency_vehicles" role="tab" data-toggle="tab">
+                {{ trans('cruds.vehicle.title') }}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#current_agency_public_official_datas" role="tab" data-toggle="tab">
-                {{ trans('cruds.publicOfficialData.title') }}
+            <a class="nav-link" href="#agency_public_officials" role="tab" data-toggle="tab">
+                {{ trans('cruds.publicOfficial.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#agency_internal_investigations" role="tab" data-toggle="tab">
+                {{ trans('cruds.internalInvestigation.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="current_agency_public_officials">
-            @includeIf('admin.agenciesOffices.relationships.currentAgencyPublicOfficials', ['publicOfficials' => $agenciesOffice->currentAgencyPublicOfficials])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="agency_office_internal_investigations">
-            @includeIf('admin.agenciesOffices.relationships.agencyOfficeInternalInvestigations', ['internalInvestigations' => $agenciesOffice->agencyOfficeInternalInvestigations])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="agency_vehicle_vehicles">
-            @includeIf('admin.agenciesOffices.relationships.agencyVehicleVehicles', ['vehicles' => $agenciesOffice->agencyVehicleVehicles])
+        <div class="tab-pane" role="tabpanel" id="agency_reports">
+            @includeIf('admin.agenciesOffices.relationships.agencyReports', ['reports' => $agenciesOffice->agencyReports])
         </div>
         <div class="tab-pane" role="tabpanel" id="agency_records">
             @includeIf('admin.agenciesOffices.relationships.agencyRecords', ['records' => $agenciesOffice->agencyRecords])
         </div>
-        <div class="tab-pane" role="tabpanel" id="agency_reports">
-            @includeIf('admin.agenciesOffices.relationships.agencyReports', ['reports' => $agenciesOffice->agencyReports])
+        <div class="tab-pane" role="tabpanel" id="agency_vehicles">
+            @includeIf('admin.agenciesOffices.relationships.agencyVehicles', ['vehicles' => $agenciesOffice->agencyVehicles])
         </div>
-        <div class="tab-pane" role="tabpanel" id="current_agency_public_official_datas">
-            @includeIf('admin.agenciesOffices.relationships.currentAgencyPublicOfficialDatas', ['publicOfficialDatas' => $agenciesOffice->currentAgencyPublicOfficialDatas])
+        <div class="tab-pane" role="tabpanel" id="agency_public_officials">
+            @includeIf('admin.agenciesOffices.relationships.agencyPublicOfficials', ['publicOfficials' => $agenciesOffice->agencyPublicOfficials])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="agency_internal_investigations">
+            @includeIf('admin.agenciesOffices.relationships.agencyInternalInvestigations', ['internalInvestigations' => $agenciesOffice->agencyInternalInvestigations])
         </div>
     </div>
 </div>

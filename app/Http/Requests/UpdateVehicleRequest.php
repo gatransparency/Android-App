@@ -17,54 +17,35 @@ class UpdateVehicleRequest extends FormRequest
     public function rules()
     {
         return [
+            'agency_id' => [
+                'required',
+                'integer',
+            ],
             'image' => [
                 'array',
-            ],
-            'gtnn_number_id' => [
-                'required',
-                'integer',
-            ],
-            'agency_vehicle_id' => [
-                'required',
-                'integer',
-            ],
-            'year' => [
-                'string',
-                'min:2',
-                'max:5',
-                'required',
             ],
             'make' => [
                 'string',
                 'min:2',
-                'max:25',
-                'required',
+                'max:50',
+                'nullable',
             ],
             'model' => [
                 'string',
                 'min:2',
                 'max:50',
-                'required',
-            ],
-            'marked' => [
-                'required',
-            ],
-            'style' => [
-                'required',
-            ],
-            'condition' => [
-                'required',
-            ],
-            'plate_number' => [
-                'string',
-                'min:2',
-                'max:15',
                 'nullable',
             ],
-            'vehicle_number' => [
+            'year' => [
                 'string',
                 'min:2',
-                'max:15',
+                'max:50',
+                'nullable',
+            ],
+            'number' => [
+                'string',
+                'min:2',
+                'max:50',
                 'nullable',
             ],
         ];

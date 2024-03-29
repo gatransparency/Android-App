@@ -2,23 +2,30 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PublicOfficial extends Model implements HasMedia
 {
-    use InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     protected $appends = [
         'image',
     ];
 
     public $table = 'public_officials';
+
+    public const STATUS_SELECT = [
+        'Active'   => 'Active',
+        'Inactive' => 'Inactive',
+    ];
 
     protected $dates = [
         'hired',
@@ -27,34 +34,35 @@ class PublicOfficial extends Model implements HasMedia
         'deleted_at',
     ];
 
-    public const STATUS_SELECT = [
-        'Active'   => 'Active',
-        'Inactive' => 'Inactive',
+    public static $searchable = [
+        'public_official_number',
+        'first_name',
+        'badge_employee_number',
+        'rank',
+        'officer_key_number',
+        'hired',
+        'email',
+        'phone_number',
     ];
 
     protected $fillable = [
-        'gtnn_number',
-        'name',
-        'email',
-        'current_agency_id',
-        'hired',
-        'badge_number',
-        'rank_position',
-        'hourly_rate',
-        'annual_salary',
+        'agency_id',
+        'public_official_number',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'badge_employee_number',
+        'sex',
+        'rank',
         'status',
-        'okey_number',
-        'years',
+        'officer_key_number',
+        'hired',
+        'years_in_profession',
+        'email',
         'phone_number',
-        'previous_employment',
-        'professionalism',
-        'appearance',
-        'uniform',
-        'attitude',
-        'law_knowledge',
-        'rights_violations',
-        'if_yes',
+        'previous_agency',
         'notes',
+        'accuracy',
         'signature',
         'initials',
         'created_at',
@@ -73,24 +81,24 @@ class PublicOfficial extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function gtnnNumberReports()
+    public function officialNumberReports()
     {
-        return $this->hasMany(Report::class, 'gtnn_number_id', 'id');
+        return $this->hasMany(Report::class, 'official_number_id', 'id');
     }
 
-    public function gtnnNumberVehicles()
+    public function publicOfficialRecords()
     {
-        return $this->hasMany(Vehicle::class, 'gtnn_number_id', 'id');
+        return $this->hasMany(Record::class, 'public_official_id', 'id');
     }
 
-    public function gtnnNumberInternalInvestigations()
+    public function publicOfficialVehicles()
     {
-        return $this->hasMany(InternalInvestigation::class, 'gtnn_number_id', 'id');
+        return $this->hasMany(Vehicle::class, 'public_official_id', 'id');
     }
 
-    public function gtnnNumberRecords()
+    public function publicOfficialInternalInvestigations()
     {
-        return $this->hasMany(Record::class, 'gtnn_number_id', 'id');
+        return $this->hasMany(InternalInvestigation::class, 'public_official_id', 'id');
     }
 
     public function getImageAttribute()
@@ -105,9 +113,9 @@ class PublicOfficial extends Model implements HasMedia
         return $file;
     }
 
-    public function current_agency()
+    public function agency()
     {
-        return $this->belongsTo(AgenciesOffice::class, 'current_agency_id');
+        return $this->belongsTo(AgenciesOffice::class, 'agency_id');
     }
 
     public function getHiredAttribute($value)
