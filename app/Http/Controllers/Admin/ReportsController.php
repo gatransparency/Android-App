@@ -24,7 +24,7 @@ class ReportsController extends Controller
         abort_if(Gate::denies('report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Report::with(['gtnn_number', 'agency'])->select(sprintf('%s.*', (new Report)->table));
+            $query = Report::with(['agency', 'official_number'])->select(sprintf('%s.*', (new Report)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,10 +48,6 @@ class ReportsController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->addColumn('gtnn_number_gtnn_number', function ($row) {
-                return $row->gtnn_number ? $row->gtnn_number->gtnn_number : '';
-            });
-
             $table->addColumn('agency_agency_name', function ($row) {
                 return $row->agency ? $row->agency->agency_name : '';
             });
@@ -59,10 +55,10 @@ class ReportsController extends Controller
             $table->editColumn('report_number', function ($row) {
                 return $row->report_number ? $row->report_number : '';
             });
-
             $table->editColumn('full_name', function ($row) {
                 return $row->full_name ? $row->full_name : '';
             });
+
             $table->editColumn('time', function ($row) {
                 return $row->time ? $row->time : '';
             });
@@ -72,36 +68,27 @@ class ReportsController extends Controller
             $table->editColumn('narrative', function ($row) {
                 return $row->narrative ? $row->narrative : '';
             });
-            $table->editColumn('report_status', function ($row) {
-                return $row->report_status ? Report::REPORT_STATUS_SELECT[$row->report_status] : '';
-            });
-            $table->editColumn('release', function ($row) {
-                return $row->release ? Report::RELEASE_SELECT[$row->release] : '';
-            });
-            $table->editColumn('admin_signature', function ($row) {
-                return $row->admin_signature ? $row->admin_signature : '';
+            $table->addColumn('official_number_public_official_number', function ($row) {
+                return $row->official_number ? $row->official_number->public_official_number : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'gtnn_number', 'agency']);
+            $table->rawColumns(['actions', 'placeholder', 'agency', 'official_number']);
 
             return $table->make(true);
         }
 
-        $public_officials = PublicOfficial::get();
-        $agencies_offices = AgenciesOffice::get();
-
-        return view('admin.reports.index', compact('public_officials', 'agencies_offices'));
+        return view('admin.reports.index');
     }
 
     public function create()
     {
         abort_if(Gate::denies('report_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.reports.create', compact('agencies', 'gtnn_numbers'));
+        $official_numbers = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.reports.create', compact('agencies', 'official_numbers'));
     }
 
     public function store(StoreReportRequest $request)
@@ -115,13 +102,13 @@ class ReportsController extends Controller
     {
         abort_if(Gate::denies('report_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $report->load('gtnn_number', 'agency');
+        $official_numbers = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.reports.edit', compact('agencies', 'gtnn_numbers', 'report'));
+        $report->load('agency', 'official_number');
+
+        return view('admin.reports.edit', compact('agencies', 'official_numbers', 'report'));
     }
 
     public function update(UpdateReportRequest $request, Report $report)
@@ -135,7 +122,7 @@ class ReportsController extends Controller
     {
         abort_if(Gate::denies('report_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $report->load('gtnn_number', 'agency');
+        $report->load('agency', 'official_number');
 
         return view('admin.reports.show', compact('report'));
     }

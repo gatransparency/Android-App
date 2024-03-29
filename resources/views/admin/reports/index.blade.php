@@ -29,10 +29,10 @@
                         {{ trans('cruds.report.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.report.fields.gtnn_number') }}
+                        {{ trans('cruds.report.fields.agency') }}
                     </th>
                     <th>
-                        {{ trans('cruds.report.fields.agency') }}
+                        {{ trans('cruds.report.fields.official_number') }}
                     </th>
                     <th>
                         {{ trans('cruds.report.fields.report_date') }}
@@ -41,10 +41,10 @@
                         {{ trans('cruds.report.fields.report_number') }}
                     </th>
                     <th>
-                        {{ trans('cruds.report.fields.date_of_occurance') }}
+                        {{ trans('cruds.report.fields.full_name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.report.fields.full_name') }}
+                        {{ trans('cruds.report.fields.date_of_occurance') }}
                     </th>
                     <th>
                         {{ trans('cruds.report.fields.time') }}
@@ -56,84 +56,8 @@
                         {{ trans('cruds.report.fields.narrative') }}
                     </th>
                     <th>
-                        {{ trans('cruds.report.fields.report_status') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.report.fields.release') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.report.fields.admin_signature') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.report.fields.date_approved') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($public_officials as $key => $item)
-                                <option value="{{ $item->gtnn_number }}">{{ $item->gtnn_number }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($agencies_offices as $key => $item)
-                                <option value="{{ $item->agency_name }}">{{ $item->agency_name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search" strict="true">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Report::REPORT_STATUS_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search" strict="true">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Report::RELEASE_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
                 </tr>
             </thead>
         </table>
@@ -188,19 +112,15 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'gtnn_number_gtnn_number', name: 'gtnn_number.gtnn_number' },
 { data: 'agency_agency_name', name: 'agency.agency_name' },
+{ data: 'official_number_public_official_number', name: 'official_number.public_official_number' },
 { data: 'report_date', name: 'report_date' },
 { data: 'report_number', name: 'report_number' },
-{ data: 'date_of_occurance', name: 'date_of_occurance' },
 { data: 'full_name', name: 'full_name' },
+{ data: 'date_of_occurance', name: 'date_of_occurance' },
 { data: 'time', name: 'time' },
 { data: 'location', name: 'location' },
 { data: 'narrative', name: 'narrative' },
-{ data: 'report_status', name: 'report_status' },
-{ data: 'release', name: 'release' },
-{ data: 'admin_signature', name: 'admin_signature' },
-{ data: 'date_approved', name: 'date_approved' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -213,27 +133,6 @@
           .columns.adjust();
   });
   
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
 });
 
 </script>

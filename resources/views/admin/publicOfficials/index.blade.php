@@ -29,73 +29,58 @@
                         {{ trans('cruds.publicOfficial.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.gtnn_number') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.publicOfficial.fields.image') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.name') }}
+                        {{ trans('cruds.publicOfficial.fields.agency') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.email') }}
+                        {{ trans('cruds.publicOfficial.fields.public_official_number') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.current_agency') }}
+                        {{ trans('cruds.publicOfficial.fields.first_name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.hired') }}
+                        {{ trans('cruds.publicOfficial.fields.middle_name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.badge_number') }}
+                        {{ trans('cruds.publicOfficial.fields.last_name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.rank_position') }}
+                        {{ trans('cruds.publicOfficial.fields.badge_employee_number') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.hourly_rate') }}
+                        {{ trans('cruds.publicOfficial.fields.sex') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.annual_salary') }}
+                        {{ trans('cruds.publicOfficial.fields.rank') }}
                     </th>
                     <th>
                         {{ trans('cruds.publicOfficial.fields.status') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.okey_number') }}
+                        {{ trans('cruds.publicOfficial.fields.officer_key_number') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.years') }}
+                        {{ trans('cruds.publicOfficial.fields.hired') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.publicOfficial.fields.years_in_profession') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.publicOfficial.fields.email') }}
                     </th>
                     <th>
                         {{ trans('cruds.publicOfficial.fields.phone_number') }}
                     </th>
                     <th>
-                        {{ trans('cruds.publicOfficial.fields.previous_employment') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.publicOfficial.fields.professionalism') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.publicOfficial.fields.appearance') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.publicOfficial.fields.uniform') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.publicOfficial.fields.attitude') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.publicOfficial.fields.law_knowledge') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.publicOfficial.fields.rights_violations') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.publicOfficial.fields.if_yes') }}
+                        {{ trans('cruds.publicOfficial.fields.previous_agency') }}
                     </th>
                     <th>
                         {{ trans('cruds.publicOfficial.fields.notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.publicOfficial.fields.accuracy') }}
                     </th>
                     <th>
                         {{ trans('cruds.publicOfficial.fields.signature') }}
@@ -114,15 +99,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <select class="search">
@@ -133,6 +109,13 @@
                         </select>
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -158,19 +141,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -252,29 +222,24 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'gtnn_number', name: 'gtnn_number' },
 { data: 'image', name: 'image', sortable: false, searchable: false },
-{ data: 'name', name: 'name' },
-{ data: 'email', name: 'email' },
-{ data: 'current_agency_agency_name', name: 'current_agency.agency_name' },
-{ data: 'hired', name: 'hired' },
-{ data: 'badge_number', name: 'badge_number' },
-{ data: 'rank_position', name: 'rank_position' },
-{ data: 'hourly_rate', name: 'hourly_rate' },
-{ data: 'annual_salary', name: 'annual_salary' },
+{ data: 'agency_agency_name', name: 'agency.agency_name' },
+{ data: 'public_official_number', name: 'public_official_number' },
+{ data: 'first_name', name: 'first_name' },
+{ data: 'middle_name', name: 'middle_name' },
+{ data: 'last_name', name: 'last_name' },
+{ data: 'badge_employee_number', name: 'badge_employee_number' },
+{ data: 'sex', name: 'sex' },
+{ data: 'rank', name: 'rank' },
 { data: 'status', name: 'status' },
-{ data: 'okey_number', name: 'okey_number' },
-{ data: 'years', name: 'years' },
+{ data: 'officer_key_number', name: 'officer_key_number' },
+{ data: 'hired', name: 'hired' },
+{ data: 'years_in_profession', name: 'years_in_profession' },
+{ data: 'email', name: 'email' },
 { data: 'phone_number', name: 'phone_number' },
-{ data: 'previous_employment', name: 'previous_employment' },
-{ data: 'professionalism', name: 'professionalism' },
-{ data: 'appearance', name: 'appearance' },
-{ data: 'uniform', name: 'uniform' },
-{ data: 'attitude', name: 'attitude' },
-{ data: 'law_knowledge', name: 'law_knowledge' },
-{ data: 'rights_violations', name: 'rights_violations' },
-{ data: 'if_yes', name: 'if_yes' },
+{ data: 'previous_agency', name: 'previous_agency' },
 { data: 'notes', name: 'notes' },
+{ data: 'accuracy', name: 'accuracy' },
 { data: 'signature', name: 'signature' },
 { data: 'initials', name: 'initials' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

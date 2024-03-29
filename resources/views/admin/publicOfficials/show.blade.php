@@ -25,14 +25,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.gtnn_number') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->gtnn_number }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.publicOfficial.fields.image') }}
                         </th>
                         <td>
@@ -45,66 +37,66 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.name') }}
+                            {{ trans('cruds.publicOfficial.fields.agency') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->name }}
+                            {{ $publicOfficial->agency->agency_name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.email') }}
+                            {{ trans('cruds.publicOfficial.fields.public_official_number') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->email }}
+                            {{ $publicOfficial->public_official_number }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.current_agency') }}
+                            {{ trans('cruds.publicOfficial.fields.first_name') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->current_agency->agency_name ?? '' }}
+                            {{ $publicOfficial->first_name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.hired') }}
+                            {{ trans('cruds.publicOfficial.fields.middle_name') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->hired }}
+                            {{ $publicOfficial->middle_name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.badge_number') }}
+                            {{ trans('cruds.publicOfficial.fields.last_name') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->badge_number }}
+                            {{ $publicOfficial->last_name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.rank_position') }}
+                            {{ trans('cruds.publicOfficial.fields.badge_employee_number') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->rank_position }}
+                            {{ $publicOfficial->badge_employee_number }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.hourly_rate') }}
+                            {{ trans('cruds.publicOfficial.fields.sex') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->hourly_rate }}
+                            {{ $publicOfficial->sex }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.annual_salary') }}
+                            {{ trans('cruds.publicOfficial.fields.rank') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->annual_salary }}
+                            {{ $publicOfficial->rank }}
                         </td>
                     </tr>
                     <tr>
@@ -117,18 +109,34 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.okey_number') }}
+                            {{ trans('cruds.publicOfficial.fields.officer_key_number') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->okey_number }}
+                            {{ $publicOfficial->officer_key_number }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.years') }}
+                            {{ trans('cruds.publicOfficial.fields.hired') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->years }}
+                            {{ $publicOfficial->hired }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.publicOfficial.fields.years_in_profession') }}
+                        </th>
+                        <td>
+                            {{ $publicOfficial->years_in_profession }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.publicOfficial.fields.email') }}
+                        </th>
+                        <td>
+                            {{ $publicOfficial->email }}
                         </td>
                     </tr>
                     <tr>
@@ -141,66 +149,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.publicOfficial.fields.previous_employment') }}
+                            {{ trans('cruds.publicOfficial.fields.previous_agency') }}
                         </th>
                         <td>
-                            {{ $publicOfficial->previous_employment }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.publicOfficial.fields.professionalism') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->professionalism }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.publicOfficial.fields.appearance') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->appearance }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.publicOfficial.fields.uniform') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->uniform }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.publicOfficial.fields.attitude') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->attitude }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.publicOfficial.fields.law_knowledge') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->law_knowledge }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.publicOfficial.fields.rights_violations') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->rights_violations }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.publicOfficial.fields.if_yes') }}
-                        </th>
-                        <td>
-                            {{ $publicOfficial->if_yes }}
+                            {{ $publicOfficial->previous_agency }}
                         </td>
                     </tr>
                     <tr>
@@ -209,6 +161,14 @@
                         </th>
                         <td>
                             {{ $publicOfficial->notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.publicOfficial.fields.accuracy') }}
+                        </th>
+                        <td>
+                            {{ $publicOfficial->accuracy }}
                         </td>
                     </tr>
                     <tr>
@@ -244,38 +204,38 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#gtnn_number_reports" role="tab" data-toggle="tab">
+            <a class="nav-link" href="#official_number_reports" role="tab" data-toggle="tab">
                 {{ trans('cruds.report.title') }}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#gtnn_number_vehicles" role="tab" data-toggle="tab">
+            <a class="nav-link" href="#public_official_records" role="tab" data-toggle="tab">
+                {{ trans('cruds.record.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#public_official_vehicles" role="tab" data-toggle="tab">
                 {{ trans('cruds.vehicle.title') }}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#gtnn_number_internal_investigations" role="tab" data-toggle="tab">
+            <a class="nav-link" href="#public_official_internal_investigations" role="tab" data-toggle="tab">
                 {{ trans('cruds.internalInvestigation.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#gtnn_number_records" role="tab" data-toggle="tab">
-                {{ trans('cruds.record.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="gtnn_number_reports">
-            @includeIf('admin.publicOfficials.relationships.gtnnNumberReports', ['reports' => $publicOfficial->gtnnNumberReports])
+        <div class="tab-pane" role="tabpanel" id="official_number_reports">
+            @includeIf('admin.publicOfficials.relationships.officialNumberReports', ['reports' => $publicOfficial->officialNumberReports])
         </div>
-        <div class="tab-pane" role="tabpanel" id="gtnn_number_vehicles">
-            @includeIf('admin.publicOfficials.relationships.gtnnNumberVehicles', ['vehicles' => $publicOfficial->gtnnNumberVehicles])
+        <div class="tab-pane" role="tabpanel" id="public_official_records">
+            @includeIf('admin.publicOfficials.relationships.publicOfficialRecords', ['records' => $publicOfficial->publicOfficialRecords])
         </div>
-        <div class="tab-pane" role="tabpanel" id="gtnn_number_internal_investigations">
-            @includeIf('admin.publicOfficials.relationships.gtnnNumberInternalInvestigations', ['internalInvestigations' => $publicOfficial->gtnnNumberInternalInvestigations])
+        <div class="tab-pane" role="tabpanel" id="public_official_vehicles">
+            @includeIf('admin.publicOfficials.relationships.publicOfficialVehicles', ['vehicles' => $publicOfficial->publicOfficialVehicles])
         </div>
-        <div class="tab-pane" role="tabpanel" id="gtnn_number_records">
-            @includeIf('admin.publicOfficials.relationships.gtnnNumberRecords', ['records' => $publicOfficial->gtnnNumberRecords])
+        <div class="tab-pane" role="tabpanel" id="public_official_internal_investigations">
+            @includeIf('admin.publicOfficials.relationships.publicOfficialInternalInvestigations', ['internalInvestigations' => $publicOfficial->publicOfficialInternalInvestigations])
         </div>
     </div>
 </div>

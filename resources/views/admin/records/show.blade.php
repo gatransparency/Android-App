@@ -25,6 +25,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.record.fields.agency') }}
+                        </th>
+                        <td>
+                            {{ $record->agency->agency_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.record.fields.public_official') }}
+                        </th>
+                        <td>
+                            {{ $record->public_official->public_official_number ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.record.fields.date_added') }}
                         </th>
                         <td>
@@ -65,22 +81,6 @@
                         </th>
                         <td>
                             {{ $record->entered_by }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.record.fields.gtnn_number') }}
-                        </th>
-                        <td>
-                            {{ $record->gtnn_number->gtnn_number ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.record.fields.agency') }}
-                        </th>
-                        <td>
-                            {{ $record->agency->agency_name ?? '' }}
                         </td>
                     </tr>
                 </tbody>

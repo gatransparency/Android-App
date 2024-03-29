@@ -29,6 +29,12 @@
                         {{ trans('cruds.record.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.record.fields.agency') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.record.fields.public_official') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.record.fields.date_added') }}
                     </th>
                     <th>
@@ -44,52 +50,8 @@
                         {{ trans('cruds.record.fields.entered_by') }}
                     </th>
                     <th>
-                        {{ trans('cruds.record.fields.gtnn_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.record.fields.agency') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($public_officials as $key => $item)
-                                <option value="{{ $item->gtnn_number }}">{{ $item->gtnn_number }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($agencies_offices as $key => $item)
-                                <option value="{{ $item->agency_name }}">{{ $item->agency_name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
                 </tr>
             </thead>
         </table>
@@ -144,13 +106,13 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'agency_agency_name', name: 'agency.agency_name' },
+{ data: 'public_official_public_official_number', name: 'public_official.public_official_number' },
 { data: 'date_added', name: 'date_added' },
 { data: 'full_name', name: 'full_name' },
 { data: 'record_type', name: 'record_type' },
 { data: 'record', name: 'record', sortable: false, searchable: false },
 { data: 'entered_by', name: 'entered_by' },
-{ data: 'gtnn_number_gtnn_number', name: 'gtnn_number.gtnn_number' },
-{ data: 'agency_agency_name', name: 'agency.agency_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -163,27 +125,6 @@
           .columns.adjust();
   });
   
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
 });
 
 </script>

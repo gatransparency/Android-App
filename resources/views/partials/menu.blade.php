@@ -31,7 +31,7 @@
             </li>
         @endcan
         @can('public_information_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/public-officials*") ? "c-show" : "" }} {{ request()->is("admin/internal-investigations*") ? "c-show" : "" }} {{ request()->is("admin/records*") ? "c-show" : "" }} {{ request()->is("admin/reports*") ? "c-show" : "" }} {{ request()->is("admin/vehicles*") ? "c-show" : "" }} {{ request()->is("admin/agencies-offices*") ? "c-show" : "" }} {{ request()->is("admin/public-records*") ? "c-show" : "" }} {{ request()->is("admin/public-official-datas*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/agencies-offices*") ? "c-show" : "" }} {{ request()->is("admin/public-officials*") ? "c-show" : "" }} {{ request()->is("admin/internal-investigations*") ? "c-show" : "" }} {{ request()->is("admin/reports*") ? "c-show" : "" }} {{ request()->is("admin/records*") ? "c-show" : "" }} {{ request()->is("admin/vehicles*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-sitemap c-sidebar-nav-icon">
 
@@ -39,6 +39,16 @@
                     {{ trans('cruds.publicInformation.title') }}
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
+                    @can('agencies_office_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.agencies-offices.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/agencies-offices") || request()->is("admin/agencies-offices/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-building c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.agenciesOffice.title') }}
+                            </a>
+                        </li>
+                    @endcan
                     @can('public_official_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.public-officials.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/public-officials") || request()->is("admin/public-officials/*") ? "c-active" : "" }}">
@@ -52,10 +62,20 @@
                     @can('internal_investigation_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.internal-investigations.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/internal-investigations") || request()->is("admin/internal-investigations/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-search c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-user-secret c-sidebar-nav-icon">
 
                                 </i>
                                 {{ trans('cruds.internalInvestigation.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('report_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.reports.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/reports") || request()->is("admin/reports/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-clipboard-check c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.report.title') }}
                             </a>
                         </li>
                     @endcan
@@ -69,16 +89,6 @@
                             </a>
                         </li>
                     @endcan
-                    @can('report_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.reports.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/reports") || request()->is("admin/reports/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-clipboard-list c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.report.title') }}
-                            </a>
-                        </li>
-                    @endcan
                     @can('vehicle_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.vehicles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/vehicles") || request()->is("admin/vehicles/*") ? "c-active" : "" }}">
@@ -86,36 +96,6 @@
 
                                 </i>
                                 {{ trans('cruds.vehicle.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('agencies_office_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.agencies-offices.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/agencies-offices") || request()->is("admin/agencies-offices/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-building c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.agenciesOffice.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('public_record_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.public-records.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/public-records") || request()->is("admin/public-records/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-folder-open c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.publicRecord.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('public_official_data_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.public-official-datas.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/public-official-datas") || request()->is("admin/public-official-datas/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-users c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.publicOfficialData.title') }}
                             </a>
                         </li>
                     @endcan

@@ -55,19 +55,9 @@ class AgenciesOffice extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function currentAgencyPublicOfficials()
+    public function agencyReports()
     {
-        return $this->hasMany(PublicOfficial::class, 'current_agency_id', 'id');
-    }
-
-    public function agencyOfficeInternalInvestigations()
-    {
-        return $this->hasMany(InternalInvestigation::class, 'agency_office_id', 'id');
-    }
-
-    public function agencyVehicleVehicles()
-    {
-        return $this->hasMany(Vehicle::class, 'agency_vehicle_id', 'id');
+        return $this->hasMany(Report::class, 'agency_id', 'id');
     }
 
     public function agencyRecords()
@@ -75,14 +65,19 @@ class AgenciesOffice extends Model implements HasMedia
         return $this->hasMany(Record::class, 'agency_id', 'id');
     }
 
-    public function agencyReports()
+    public function agencyVehicles()
     {
-        return $this->hasMany(Report::class, 'agency_id', 'id');
+        return $this->hasMany(Vehicle::class, 'agency_id', 'id');
     }
 
-    public function currentAgencyPublicOfficialDatas()
+    public function agencyPublicOfficials()
     {
-        return $this->hasMany(PublicOfficialData::class, 'current_agency_id', 'id');
+        return $this->hasMany(PublicOfficial::class, 'agency_id', 'id');
+    }
+
+    public function agencyInternalInvestigations()
+    {
+        return $this->hasMany(InternalInvestigation::class, 'agency_id', 'id');
     }
 
     public function getImageAttribute()

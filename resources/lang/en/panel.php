@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'site_title' => 'GTNN Portal',
+    'site_title' => 'GT Portal',
 
 ];

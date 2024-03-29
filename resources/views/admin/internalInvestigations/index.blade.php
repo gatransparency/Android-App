@@ -29,25 +29,19 @@
                         {{ trans('cruds.internalInvestigation.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.internalInvestigation.fields.ia_date') }}
+                        {{ trans('cruds.internalInvestigation.fields.agency') }}
                     </th>
                     <th>
-                        {{ trans('cruds.internalInvestigation.fields.gtnn_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.internalInvestigation.fields.agency_office') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.internalInvestigation.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.internalInvestigation.fields.investigator') }}
+                        {{ trans('cruds.internalInvestigation.fields.public_official') }}
                     </th>
                     <th>
                         {{ trans('cruds.internalInvestigation.fields.narrative') }}
                     </th>
                     <th>
-                        {{ trans('cruds.internalInvestigation.fields.files') }}
+                        {{ trans('cruds.internalInvestigation.fields.file') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.internalInvestigation.fields.status') }}
                     </th>
                     <th>
                         {{ trans('cruds.internalInvestigation.fields.entered_by') }}
@@ -63,16 +57,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($public_officials as $key => $item)
-                                <option value="{{ $item->gtnn_number }}">{{ $item->gtnn_number }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($agencies_offices as $key => $item)
@@ -81,18 +65,33 @@
                         </select>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($public_officials as $key => $item)
+                                <option value="{{ $item->public_official_number }}">{{ $item->public_official_number }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <select class="search" strict="true">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach(App\Models\InternalInvestigation::STATUS_SELECT as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                     </td>
@@ -150,14 +149,12 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'ia_date', name: 'ia_date' },
-{ data: 'gtnn_number_gtnn_number', name: 'gtnn_number.gtnn_number' },
-{ data: 'agency_office_agency_name', name: 'agency_office.agency_name' },
-{ data: 'name', name: 'name' },
-{ data: 'investigator', name: 'investigator' },
+{ data: 'agency_agency_name', name: 'agency.agency_name' },
+{ data: 'public_official_public_official_number', name: 'public_official.public_official_number' },
 { data: 'narrative', name: 'narrative' },
-{ data: 'files', name: 'files', sortable: false, searchable: false },
-{ data: 'entered_by', name: 'entered_by' },
+{ data: 'file', name: 'file', sortable: false, searchable: false },
+{ data: 'status', name: 'status' },
+{ data: 'entered_by_name', name: 'entered_by.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

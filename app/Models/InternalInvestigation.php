@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,29 +13,32 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class InternalInvestigation extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     protected $appends = [
-        'files',
+        'file',
     ];
 
     public $table = 'internal_investigations';
 
     protected $dates = [
-        'ia_date',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
+    public const STATUS_SELECT = [
+        'open'       => 'Open',
+        'closed'     => 'Closed',
+        'pendingrel' => 'Pending Release',
+    ];
+
     protected $fillable = [
-        'ia_date',
-        'gtnn_number_id',
-        'agency_office_id',
-        'name',
-        'investigator',
+        'agency_id',
+        'public_official_id',
         'narrative',
-        'entered_by',
+        'status',
+        'entered_by_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -52,28 +55,23 @@ class InternalInvestigation extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function getIaDateAttribute($value)
+    public function agency()
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $this->belongsTo(AgenciesOffice::class, 'agency_id');
     }
 
-    public function setIaDateAttribute($value)
+    public function public_official()
     {
-        $this->attributes['ia_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        return $this->belongsTo(PublicOfficial::class, 'public_official_id');
     }
 
-    public function gtnn_number()
+    public function getFileAttribute()
     {
-        return $this->belongsTo(PublicOfficial::class, 'gtnn_number_id');
+        return $this->getMedia('file');
     }
 
-    public function agency_office()
+    public function entered_by()
     {
-        return $this->belongsTo(AgenciesOffice::class, 'agency_office_id');
-    }
-
-    public function getFilesAttribute()
-    {
-        return $this->getMedia('files');
+        return $this->belongsTo(User::class, 'entered_by_id');
     }
 }

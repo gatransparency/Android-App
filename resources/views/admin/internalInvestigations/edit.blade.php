@@ -11,62 +11,32 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="ia_date">{{ trans('cruds.internalInvestigation.fields.ia_date') }}</label>
-                <input class="form-control date {{ $errors->has('ia_date') ? 'is-invalid' : '' }}" type="text" name="ia_date" id="ia_date" value="{{ old('ia_date', $internalInvestigation->ia_date) }}" required>
-                @if($errors->has('ia_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('ia_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.ia_date_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="gtnn_number_id">{{ trans('cruds.internalInvestigation.fields.gtnn_number') }}</label>
-                <select class="form-control select2 {{ $errors->has('gtnn_number') ? 'is-invalid' : '' }}" name="gtnn_number_id" id="gtnn_number_id" required>
-                    @foreach($gtnn_numbers as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('gtnn_number_id') ? old('gtnn_number_id') : $internalInvestigation->gtnn_number->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <label class="required" for="agency_id">{{ trans('cruds.internalInvestigation.fields.agency') }}</label>
+                <select class="form-control select2 {{ $errors->has('agency') ? 'is-invalid' : '' }}" name="agency_id" id="agency_id" required>
+                    @foreach($agencies as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('agency_id') ? old('agency_id') : $internalInvestigation->agency->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('gtnn_number'))
+                @if($errors->has('agency'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('gtnn_number') }}
+                        {{ $errors->first('agency') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.gtnn_number_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.agency_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="agency_office_id">{{ trans('cruds.internalInvestigation.fields.agency_office') }}</label>
-                <select class="form-control select2 {{ $errors->has('agency_office') ? 'is-invalid' : '' }}" name="agency_office_id" id="agency_office_id" required>
-                    @foreach($agency_offices as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('agency_office_id') ? old('agency_office_id') : $internalInvestigation->agency_office->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <label class="required" for="public_official_id">{{ trans('cruds.internalInvestigation.fields.public_official') }}</label>
+                <select class="form-control select2 {{ $errors->has('public_official') ? 'is-invalid' : '' }}" name="public_official_id" id="public_official_id" required>
+                    @foreach($public_officials as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('public_official_id') ? old('public_official_id') : $internalInvestigation->public_official->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('agency_office'))
+                @if($errors->has('public_official'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('agency_office') }}
+                        {{ $errors->first('public_official') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.agency_office_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.internalInvestigation.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $internalInvestigation->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.name_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="investigator">{{ trans('cruds.internalInvestigation.fields.investigator') }}</label>
-                <input class="form-control {{ $errors->has('investigator') ? 'is-invalid' : '' }}" type="text" name="investigator" id="investigator" value="{{ old('investigator', $internalInvestigation->investigator) }}" required>
-                @if($errors->has('investigator'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('investigator') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.investigator_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.public_official_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="narrative">{{ trans('cruds.internalInvestigation.fields.narrative') }}</label>
@@ -79,19 +49,38 @@
                 <span class="help-block">{{ trans('cruds.internalInvestigation.fields.narrative_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="files">{{ trans('cruds.internalInvestigation.fields.files') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('files') ? 'is-invalid' : '' }}" id="files-dropzone">
+                <label for="file">{{ trans('cruds.internalInvestigation.fields.file') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}" id="file-dropzone">
                 </div>
-                @if($errors->has('files'))
+                @if($errors->has('file'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('files') }}
+                        {{ $errors->first('file') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.files_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.file_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="entered_by">{{ trans('cruds.internalInvestigation.fields.entered_by') }}</label>
-                <input class="form-control {{ $errors->has('entered_by') ? 'is-invalid' : '' }}" type="text" name="entered_by" id="entered_by" value="{{ old('entered_by', $internalInvestigation->entered_by) }}" required>
+                <label class="required">{{ trans('cruds.internalInvestigation.fields.status') }}</label>
+                <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status" required>
+                    <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\InternalInvestigation::STATUS_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('status', $internalInvestigation->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('status'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('status') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.internalInvestigation.fields.status_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="entered_by_id">{{ trans('cruds.internalInvestigation.fields.entered_by') }}</label>
+                <select class="form-control select2 {{ $errors->has('entered_by') ? 'is-invalid' : '' }}" name="entered_by_id" id="entered_by_id" required>
+                    @foreach($entered_bies as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('entered_by_id') ? old('entered_by_id') : $internalInvestigation->entered_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('entered_by'))
                     <div class="invalid-feedback">
                         {{ $errors->first('entered_by') }}
@@ -114,20 +103,20 @@
 
 @section('scripts')
 <script>
-    var uploadedFilesMap = {}
-Dropzone.options.filesDropzone = {
+    var uploadedFileMap = {}
+Dropzone.options.fileDropzone = {
     url: '{{ route('admin.internal-investigations.storeMedia') }}',
-    maxFilesize: 25, // MB
+    maxFilesize: 150, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 25
+      size: 150
     },
     success: function (file, response) {
-      $('form').append('<input type="hidden" name="files[]" value="' + response.name + '">')
-      uploadedFilesMap[file.name] = response.name
+      $('form').append('<input type="hidden" name="file[]" value="' + response.name + '">')
+      uploadedFileMap[file.name] = response.name
     },
     removedfile: function (file) {
       file.previewElement.remove()
@@ -135,19 +124,19 @@ Dropzone.options.filesDropzone = {
       if (typeof file.file_name !== 'undefined') {
         name = file.file_name
       } else {
-        name = uploadedFilesMap[file.name]
+        name = uploadedFileMap[file.name]
       }
-      $('form').find('input[name="files[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="file[]"][value="' + name + '"]').remove()
     },
     init: function () {
-@if(isset($internalInvestigation) && $internalInvestigation->files)
+@if(isset($internalInvestigation) && $internalInvestigation->file)
           var files =
-            {!! json_encode($internalInvestigation->files) !!}
+            {!! json_encode($internalInvestigation->file) !!}
               for (var i in files) {
               var file = files[i]
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="files[]" value="' + file.file_name + '">')
+              $('form').append('<input type="hidden" name="file[]" value="' + file.file_name + '">')
             }
 @endif
     },

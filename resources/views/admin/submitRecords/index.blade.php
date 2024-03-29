@@ -19,136 +19,70 @@
     </div>
 
     <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-SubmitRecord">
-                <thead>
-                    <tr>
-                        <th width="10">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-SubmitRecord">
+            <thead>
+                <tr>
+                    <th width="10">
 
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.id') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.role') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.name') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.agency_affiliation') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.address') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.image') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.files') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.submitRecord.fields.narrative') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($submitRecords as $key => $submitRecord)
-                        <tr data-entry-id="{{ $submitRecord->id }}">
-                            <td>
-
-                            </td>
-                            <td>
-                                {{ $submitRecord->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $submitRecord->role ?? '' }}
-                            </td>
-                            <td>
-                                {{ $submitRecord->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $submitRecord->agency_affiliation ?? '' }}
-                            </td>
-                            <td>
-                                {{ $submitRecord->address ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($submitRecord->image as $key => $media)
-                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                        <img src="{{ $media->getUrl('thumb') }}">
-                                    </a>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach($submitRecord->files as $key => $media)
-                                    <a href="{{ $media->getUrl() }}" target="_blank">
-                                        {{ trans('global.view_file') }}
-                                    </a>
-                                @endforeach
-                            </td>
-                            <td>
-                                {{ $submitRecord->narrative ?? '' }}
-                            </td>
-                            <td>
-                                @can('submit_record_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.submit-records.show', $submitRecord->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
-
-                                @can('submit_record_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.submit-records.edit', $submitRecord->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
-
-                                @can('submit_record_delete')
-                                    <form action="{{ route('admin.submit-records.destroy', $submitRecord->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.id') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.role') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.agency_affiliation') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.address') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.image') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.files') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.submitRecord.fields.narrative') }}
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 
@@ -161,14 +95,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('submit_record_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.submit-records.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
       });
 
       if (ids.length === 0) {
@@ -190,12 +124,30 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.submit-records.index') }}",
+    columns: [
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'id', name: 'id' },
+{ data: 'role', name: 'role' },
+{ data: 'name', name: 'name' },
+{ data: 'agency_affiliation', name: 'agency_affiliation' },
+{ data: 'address', name: 'address' },
+{ data: 'image', name: 'image', sortable: false, searchable: false },
+{ data: 'files', name: 'files', sortable: false, searchable: false },
+{ data: 'narrative', name: 'narrative' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  });
-  let table = $('.datatable-SubmitRecord:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  };
+  let table = $('.datatable-SubmitRecord').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -222,7 +174,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-})
+});
 
 </script>
 @endsection

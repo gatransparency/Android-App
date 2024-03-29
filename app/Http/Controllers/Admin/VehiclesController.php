@@ -26,7 +26,7 @@ class VehiclesController extends Controller
         abort_if(Gate::denies('vehicle_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Vehicle::with(['gtnn_number', 'agency_vehicle'])->select(sprintf('%s.*', (new Vehicle)->table));
+            $query = Vehicle::with(['agency', 'public_official'])->select(sprintf('%s.*', (new Vehicle)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,6 +50,14 @@ class VehiclesController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+            $table->addColumn('agency_agency_name', function ($row) {
+                return $row->agency ? $row->agency->agency_name : '';
+            });
+
+            $table->addColumn('public_official_public_official_number', function ($row) {
+                return $row->public_official ? $row->public_official->public_official_number : '';
+            });
+
             $table->editColumn('image', function ($row) {
                 if (! $row->image) {
                     return '';
@@ -61,62 +69,39 @@ class VehiclesController extends Controller
 
                 return implode(' ', $links);
             });
-            $table->addColumn('gtnn_number_gtnn_number', function ($row) {
-                return $row->gtnn_number ? $row->gtnn_number->gtnn_number : '';
-            });
-
-            $table->addColumn('agency_vehicle_agency_name', function ($row) {
-                return $row->agency_vehicle ? $row->agency_vehicle->agency_name : '';
-            });
-
-            $table->editColumn('year', function ($row) {
-                return $row->year ? $row->year : '';
-            });
             $table->editColumn('make', function ($row) {
                 return $row->make ? $row->make : '';
             });
             $table->editColumn('model', function ($row) {
                 return $row->model ? $row->model : '';
             });
+            $table->editColumn('year', function ($row) {
+                return $row->year ? $row->year : '';
+            });
+            $table->editColumn('number', function ($row) {
+                return $row->number ? $row->number : '';
+            });
             $table->editColumn('marked', function ($row) {
                 return $row->marked ? Vehicle::MARKED_SELECT[$row->marked] : '';
             });
-            $table->editColumn('style', function ($row) {
-                return $row->style ? Vehicle::STYLE_SELECT[$row->style] : '';
-            });
-            $table->editColumn('condition', function ($row) {
-                return $row->condition ? Vehicle::CONDITION_SELECT[$row->condition] : '';
-            });
-            $table->editColumn('plate_number', function ($row) {
-                return $row->plate_number ? $row->plate_number : '';
-            });
-            $table->editColumn('vehicle_number', function ($row) {
-                return $row->vehicle_number ? $row->vehicle_number : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
 
-            $table->rawColumns(['actions', 'placeholder', 'image', 'gtnn_number', 'agency_vehicle']);
+            $table->rawColumns(['actions', 'placeholder', 'agency', 'public_official', 'image']);
 
             return $table->make(true);
         }
 
-        $public_officials = PublicOfficial::get();
-        $agencies_offices = AgenciesOffice::get();
-
-        return view('admin.vehicles.index', compact('public_officials', 'agencies_offices'));
+        return view('admin.vehicles.index');
     }
 
     public function create()
     {
         abort_if(Gate::denies('vehicle_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $agency_vehicles = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $public_officials = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.vehicles.create', compact('agency_vehicles', 'gtnn_numbers'));
+        return view('admin.vehicles.create', compact('agencies', 'public_officials'));
     }
 
     public function store(StoreVehicleRequest $request)
@@ -138,13 +123,13 @@ class VehiclesController extends Controller
     {
         abort_if(Gate::denies('vehicle_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $agency_vehicles = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $public_officials = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $vehicle->load('gtnn_number', 'agency_vehicle');
+        $vehicle->load('agency', 'public_official');
 
-        return view('admin.vehicles.edit', compact('agency_vehicles', 'gtnn_numbers', 'vehicle'));
+        return view('admin.vehicles.edit', compact('agencies', 'public_officials', 'vehicle'));
     }
 
     public function update(UpdateVehicleRequest $request, Vehicle $vehicle)
@@ -172,7 +157,7 @@ class VehiclesController extends Controller
     {
         abort_if(Gate::denies('vehicle_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vehicle->load('gtnn_number', 'agency_vehicle');
+        $vehicle->load('agency', 'public_official');
 
         return view('admin.vehicles.show', compact('vehicle'));
     }

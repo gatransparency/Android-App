@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateInternalInvestigationRequest;
 use App\Models\AgenciesOffice;
 use App\Models\InternalInvestigation;
 use App\Models\PublicOfficial;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -26,7 +27,7 @@ class InternalInvestigationsController extends Controller
         abort_if(Gate::denies('internal_investigation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = InternalInvestigation::with(['gtnn_number', 'agency_office'])->select(sprintf('%s.*', (new InternalInvestigation)->table));
+            $query = InternalInvestigation::with(['agency', 'public_official', 'entered_by'])->select(sprintf('%s.*', (new InternalInvestigation)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,67 +51,66 @@ class InternalInvestigationsController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-
-            $table->addColumn('gtnn_number_gtnn_number', function ($row) {
-                return $row->gtnn_number ? $row->gtnn_number->gtnn_number : '';
+            $table->addColumn('agency_agency_name', function ($row) {
+                return $row->agency ? $row->agency->agency_name : '';
             });
 
-            $table->addColumn('agency_office_agency_name', function ($row) {
-                return $row->agency_office ? $row->agency_office->agency_name : '';
+            $table->addColumn('public_official_public_official_number', function ($row) {
+                return $row->public_official ? $row->public_official->public_official_number : '';
             });
 
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('investigator', function ($row) {
-                return $row->investigator ? $row->investigator : '';
-            });
             $table->editColumn('narrative', function ($row) {
                 return $row->narrative ? $row->narrative : '';
             });
-            $table->editColumn('files', function ($row) {
-                if (! $row->files) {
+            $table->editColumn('file', function ($row) {
+                if (! $row->file) {
                     return '';
                 }
                 $links = [];
-                foreach ($row->files as $media) {
+                foreach ($row->file as $media) {
                     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
 
                 return implode(', ', $links);
             });
-            $table->editColumn('entered_by', function ($row) {
-                return $row->entered_by ? $row->entered_by : '';
+            $table->editColumn('status', function ($row) {
+                return $row->status ? InternalInvestigation::STATUS_SELECT[$row->status] : '';
+            });
+            $table->addColumn('entered_by_name', function ($row) {
+                return $row->entered_by ? $row->entered_by->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'gtnn_number', 'agency_office', 'files']);
+            $table->rawColumns(['actions', 'placeholder', 'agency', 'public_official', 'file', 'entered_by']);
 
             return $table->make(true);
         }
 
-        $public_officials = PublicOfficial::get();
         $agencies_offices = AgenciesOffice::get();
+        $public_officials = PublicOfficial::get();
+        $users            = User::get();
 
-        return view('admin.internalInvestigations.index', compact('public_officials', 'agencies_offices'));
+        return view('admin.internalInvestigations.index', compact('agencies_offices', 'public_officials', 'users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('internal_investigation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $agency_offices = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $public_officials = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.internalInvestigations.create', compact('agency_offices', 'gtnn_numbers'));
+        $entered_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.internalInvestigations.create', compact('agencies', 'entered_bies', 'public_officials'));
     }
 
     public function store(StoreInternalInvestigationRequest $request)
     {
         $internalInvestigation = InternalInvestigation::create($request->all());
 
-        foreach ($request->input('files', []) as $file) {
-            $internalInvestigation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+        foreach ($request->input('file', []) as $file) {
+            $internalInvestigation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -124,30 +124,32 @@ class InternalInvestigationsController extends Controller
     {
         abort_if(Gate::denies('internal_investigation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gtnn_numbers = PublicOfficial::pluck('gtnn_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $agency_offices = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $public_officials = PublicOfficial::pluck('public_official_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $internalInvestigation->load('gtnn_number', 'agency_office');
+        $entered_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.internalInvestigations.edit', compact('agency_offices', 'gtnn_numbers', 'internalInvestigation'));
+        $internalInvestigation->load('agency', 'public_official', 'entered_by');
+
+        return view('admin.internalInvestigations.edit', compact('agencies', 'entered_bies', 'internalInvestigation', 'public_officials'));
     }
 
     public function update(UpdateInternalInvestigationRequest $request, InternalInvestigation $internalInvestigation)
     {
         $internalInvestigation->update($request->all());
 
-        if (count($internalInvestigation->files) > 0) {
-            foreach ($internalInvestigation->files as $media) {
-                if (! in_array($media->file_name, $request->input('files', []))) {
+        if (count($internalInvestigation->file) > 0) {
+            foreach ($internalInvestigation->file as $media) {
+                if (! in_array($media->file_name, $request->input('file', []))) {
                     $media->delete();
                 }
             }
         }
-        $media = $internalInvestigation->files->pluck('file_name')->toArray();
-        foreach ($request->input('files', []) as $file) {
+        $media = $internalInvestigation->file->pluck('file_name')->toArray();
+        foreach ($request->input('file', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
-                $internalInvestigation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+                $internalInvestigation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
             }
         }
 
@@ -158,7 +160,7 @@ class InternalInvestigationsController extends Controller
     {
         abort_if(Gate::denies('internal_investigation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $internalInvestigation->load('gtnn_number', 'agency_office');
+        $internalInvestigation->load('agency', 'public_official', 'entered_by');
 
         return view('admin.internalInvestigations.show', compact('internalInvestigation'));
     }

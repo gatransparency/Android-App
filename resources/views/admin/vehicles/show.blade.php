@@ -25,6 +25,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.vehicle.fields.agency') }}
+                        </th>
+                        <td>
+                            {{ $vehicle->agency->agency_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.vehicle.fields.public_official') }}
+                        </th>
+                        <td>
+                            {{ $vehicle->public_official->public_official_number ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.vehicle.fields.image') }}
                         </th>
                         <td>
@@ -33,30 +49,6 @@
                                     <img src="{{ $media->getUrl('thumb') }}">
                                 </a>
                             @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.gtnn_number') }}
-                        </th>
-                        <td>
-                            {{ $vehicle->gtnn_number->gtnn_number ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.agency_vehicle') }}
-                        </th>
-                        <td>
-                            {{ $vehicle->agency_vehicle->agency_name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.year') }}
-                        </th>
-                        <td>
-                            {{ $vehicle->year }}
                         </td>
                     </tr>
                     <tr>
@@ -77,50 +69,26 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.vehicle.fields.year') }}
+                        </th>
+                        <td>
+                            {{ $vehicle->year }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.vehicle.fields.number') }}
+                        </th>
+                        <td>
+                            {{ $vehicle->number }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.vehicle.fields.marked') }}
                         </th>
                         <td>
                             {{ App\Models\Vehicle::MARKED_SELECT[$vehicle->marked] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.style') }}
-                        </th>
-                        <td>
-                            {{ App\Models\Vehicle::STYLE_SELECT[$vehicle->style] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.condition') }}
-                        </th>
-                        <td>
-                            {{ App\Models\Vehicle::CONDITION_SELECT[$vehicle->condition] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.plate_number') }}
-                        </th>
-                        <td>
-                            {{ $vehicle->plate_number }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.vehicle_number') }}
-                        </th>
-                        <td>
-                            {{ $vehicle->vehicle_number }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vehicle.fields.notes') }}
-                        </th>
-                        <td>
-                            {{ $vehicle->notes }}
                         </td>
                     </tr>
                 </tbody>

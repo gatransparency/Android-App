@@ -25,42 +25,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.internalInvestigation.fields.ia_date') }}
+                            {{ trans('cruds.internalInvestigation.fields.agency') }}
                         </th>
                         <td>
-                            {{ $internalInvestigation->ia_date }}
+                            {{ $internalInvestigation->agency->agency_name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.internalInvestigation.fields.gtnn_number') }}
+                            {{ trans('cruds.internalInvestigation.fields.public_official') }}
                         </th>
                         <td>
-                            {{ $internalInvestigation->gtnn_number->gtnn_number ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.internalInvestigation.fields.agency_office') }}
-                        </th>
-                        <td>
-                            {{ $internalInvestigation->agency_office->agency_name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.internalInvestigation.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $internalInvestigation->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.internalInvestigation.fields.investigator') }}
-                        </th>
-                        <td>
-                            {{ $internalInvestigation->investigator }}
+                            {{ $internalInvestigation->public_official->public_official_number ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -73,10 +49,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.internalInvestigation.fields.files') }}
+                            {{ trans('cruds.internalInvestigation.fields.file') }}
                         </th>
                         <td>
-                            @foreach($internalInvestigation->files as $key => $media)
+                            @foreach($internalInvestigation->file as $key => $media)
                                 <a href="{{ $media->getUrl() }}" target="_blank">
                                     {{ trans('global.view_file') }}
                                 </a>
@@ -85,10 +61,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.internalInvestigation.fields.status') }}
+                        </th>
+                        <td>
+                            {{ App\Models\InternalInvestigation::STATUS_SELECT[$internalInvestigation->status] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.internalInvestigation.fields.entered_by') }}
                         </th>
                         <td>
-                            {{ $internalInvestigation->entered_by }}
+                            {{ $internalInvestigation->entered_by->name ?? '' }}
                         </td>
                     </tr>
                 </tbody>

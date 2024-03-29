@@ -1,8 +1,8 @@
-@can('report_create')
+@can('vehicle_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.reports.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.report.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.vehicles.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.vehicle.title_singular') }}
             </a>
         </div>
     </div>
@@ -10,46 +10,43 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.report.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.vehicle.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-agencyReports">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-publicOfficialVehicles">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.id') }}
+                            {{ trans('cruds.vehicle.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.agency') }}
+                            {{ trans('cruds.vehicle.fields.agency') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.official_number') }}
+                            {{ trans('cruds.vehicle.fields.public_official') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.report_date') }}
+                            {{ trans('cruds.vehicle.fields.image') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.report_number') }}
+                            {{ trans('cruds.vehicle.fields.make') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.full_name') }}
+                            {{ trans('cruds.vehicle.fields.model') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.date_of_occurance') }}
+                            {{ trans('cruds.vehicle.fields.year') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.time') }}
+                            {{ trans('cruds.vehicle.fields.number') }}
                         </th>
                         <th>
-                            {{ trans('cruds.report.fields.location') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.report.fields.narrative') }}
+                            {{ trans('cruds.vehicle.fields.marked') }}
                         </th>
                         <th>
                             &nbsp;
@@ -57,56 +54,57 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($reports as $key => $report)
-                        <tr data-entry-id="{{ $report->id }}">
+                    @foreach($vehicles as $key => $vehicle)
+                        <tr data-entry-id="{{ $vehicle->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $report->id ?? '' }}
+                                {{ $vehicle->id ?? '' }}
                             </td>
                             <td>
-                                {{ $report->agency->agency_name ?? '' }}
+                                {{ $vehicle->agency->agency_name ?? '' }}
                             </td>
                             <td>
-                                {{ $report->official_number->public_official_number ?? '' }}
+                                {{ $vehicle->public_official->public_official_number ?? '' }}
                             </td>
                             <td>
-                                {{ $report->report_date ?? '' }}
+                                @foreach($vehicle->image as $key => $media)
+                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $media->getUrl('thumb') }}">
+                                    </a>
+                                @endforeach
                             </td>
                             <td>
-                                {{ $report->report_number ?? '' }}
+                                {{ $vehicle->make ?? '' }}
                             </td>
                             <td>
-                                {{ $report->full_name ?? '' }}
+                                {{ $vehicle->model ?? '' }}
                             </td>
                             <td>
-                                {{ $report->date_of_occurance ?? '' }}
+                                {{ $vehicle->year ?? '' }}
                             </td>
                             <td>
-                                {{ $report->time ?? '' }}
+                                {{ $vehicle->number ?? '' }}
                             </td>
                             <td>
-                                {{ $report->location ?? '' }}
+                                {{ App\Models\Vehicle::MARKED_SELECT[$vehicle->marked] ?? '' }}
                             </td>
                             <td>
-                                {{ $report->narrative ?? '' }}
-                            </td>
-                            <td>
-                                @can('report_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.reports.show', $report->id) }}">
+                                @can('vehicle_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.vehicles.show', $vehicle->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('report_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.reports.edit', $report->id) }}">
+                                @can('vehicle_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.vehicles.edit', $vehicle->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('report_delete')
-                                    <form action="{{ route('admin.reports.destroy', $report->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('vehicle_delete')
+                                    <form action="{{ route('admin.vehicles.destroy', $vehicle->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -128,11 +126,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('report_delete')
+@can('vehicle_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.reports.massDestroy') }}",
+    url: "{{ route('admin.vehicles.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -163,7 +161,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  let table = $('.datatable-agencyReports:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-publicOfficialVehicles:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

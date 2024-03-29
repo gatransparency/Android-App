@@ -10,11 +10,8 @@ class CreateInternalInvestigationsTable extends Migration
     {
         Schema::create('internal_investigations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('ia_date');
-            $table->string('name');
-            $table->string('investigator');
             $table->longText('narrative');
-            $table->string('entered_by');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

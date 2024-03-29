@@ -155,7 +155,7 @@ class AgenciesOfficesController extends Controller
     {
         abort_if(Gate::denies('agencies_office_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $agenciesOffice->load('currentAgencyPublicOfficials', 'agencyOfficeInternalInvestigations', 'agencyVehicleVehicles', 'agencyRecords', 'agencyReports', 'currentAgencyPublicOfficialDatas');
+        $agenciesOffice->load('agencyReports', 'agencyRecords', 'agencyVehicles', 'agencyPublicOfficials', 'agencyInternalInvestigations');
 
         return view('admin.agenciesOffices.show', compact('agenciesOffice'));
     }

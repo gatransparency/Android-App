@@ -25,7 +25,7 @@ class PublicOfficialsController extends Controller
         abort_if(Gate::denies('public_official_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PublicOfficial::with(['current_agency'])->select(sprintf('%s.*', (new PublicOfficial)->table));
+            $query = PublicOfficial::with(['agency'])->select(sprintf('%s.*', (new PublicOfficial)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,9 +49,6 @@ class PublicOfficialsController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->editColumn('gtnn_number', function ($row) {
-                return $row->gtnn_number ? $row->gtnn_number : '';
-            });
             $table->editColumn('image', function ($row) {
                 if ($photo = $row->image) {
                     return sprintf(
@@ -63,66 +60,55 @@ class PublicOfficialsController extends Controller
 
                 return '';
             });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-            $table->addColumn('current_agency_agency_name', function ($row) {
-                return $row->current_agency ? $row->current_agency->agency_name : '';
+            $table->addColumn('agency_agency_name', function ($row) {
+                return $row->agency ? $row->agency->agency_name : '';
             });
 
-            $table->editColumn('badge_number', function ($row) {
-                return $row->badge_number ? $row->badge_number : '';
+            $table->editColumn('public_official_number', function ($row) {
+                return $row->public_official_number ? $row->public_official_number : '';
             });
-            $table->editColumn('rank_position', function ($row) {
-                return $row->rank_position ? $row->rank_position : '';
+            $table->editColumn('first_name', function ($row) {
+                return $row->first_name ? $row->first_name : '';
             });
-            $table->editColumn('hourly_rate', function ($row) {
-                return $row->hourly_rate ? $row->hourly_rate : '';
+            $table->editColumn('middle_name', function ($row) {
+                return $row->middle_name ? $row->middle_name : '';
             });
-            $table->editColumn('annual_salary', function ($row) {
-                return $row->annual_salary ? $row->annual_salary : '';
+            $table->editColumn('last_name', function ($row) {
+                return $row->last_name ? $row->last_name : '';
+            });
+            $table->editColumn('badge_employee_number', function ($row) {
+                return $row->badge_employee_number ? $row->badge_employee_number : '';
+            });
+            $table->editColumn('sex', function ($row) {
+                return $row->sex ? $row->sex : '';
+            });
+            $table->editColumn('rank', function ($row) {
+                return $row->rank ? $row->rank : '';
             });
             $table->editColumn('status', function ($row) {
                 return $row->status ? PublicOfficial::STATUS_SELECT[$row->status] : '';
             });
-            $table->editColumn('okey_number', function ($row) {
-                return $row->okey_number ? $row->okey_number : '';
+            $table->editColumn('officer_key_number', function ($row) {
+                return $row->officer_key_number ? $row->officer_key_number : '';
             });
-            $table->editColumn('years', function ($row) {
-                return $row->years ? $row->years : '';
+
+            $table->editColumn('years_in_profession', function ($row) {
+                return $row->years_in_profession ? $row->years_in_profession : '';
+            });
+            $table->editColumn('email', function ($row) {
+                return $row->email ? $row->email : '';
             });
             $table->editColumn('phone_number', function ($row) {
                 return $row->phone_number ? $row->phone_number : '';
             });
-            $table->editColumn('previous_employment', function ($row) {
-                return $row->previous_employment ? $row->previous_employment : '';
-            });
-            $table->editColumn('professionalism', function ($row) {
-                return $row->professionalism ? $row->professionalism : '';
-            });
-            $table->editColumn('appearance', function ($row) {
-                return $row->appearance ? $row->appearance : '';
-            });
-            $table->editColumn('uniform', function ($row) {
-                return $row->uniform ? $row->uniform : '';
-            });
-            $table->editColumn('attitude', function ($row) {
-                return $row->attitude ? $row->attitude : '';
-            });
-            $table->editColumn('law_knowledge', function ($row) {
-                return $row->law_knowledge ? $row->law_knowledge : '';
-            });
-            $table->editColumn('rights_violations', function ($row) {
-                return $row->rights_violations ? $row->rights_violations : '';
-            });
-            $table->editColumn('if_yes', function ($row) {
-                return $row->if_yes ? $row->if_yes : '';
+            $table->editColumn('previous_agency', function ($row) {
+                return $row->previous_agency ? $row->previous_agency : '';
             });
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
+            });
+            $table->editColumn('accuracy', function ($row) {
+                return $row->accuracy ? $row->accuracy : '';
             });
             $table->editColumn('signature', function ($row) {
                 return $row->signature ? $row->signature : '';
@@ -131,7 +117,7 @@ class PublicOfficialsController extends Controller
                 return $row->initials ? $row->initials : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'image', 'current_agency']);
+            $table->rawColumns(['actions', 'placeholder', 'image', 'agency']);
 
             return $table->make(true);
         }
@@ -145,9 +131,9 @@ class PublicOfficialsController extends Controller
     {
         abort_if(Gate::denies('public_official_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $current_agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.publicOfficials.create', compact('current_agencies'));
+        return view('admin.publicOfficials.create', compact('agencies'));
     }
 
     public function store(StorePublicOfficialRequest $request)
@@ -169,11 +155,11 @@ class PublicOfficialsController extends Controller
     {
         abort_if(Gate::denies('public_official_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $current_agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $agencies = AgenciesOffice::pluck('agency_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $publicOfficial->load('current_agency');
+        $publicOfficial->load('agency');
 
-        return view('admin.publicOfficials.edit', compact('current_agencies', 'publicOfficial'));
+        return view('admin.publicOfficials.edit', compact('agencies', 'publicOfficial'));
     }
 
     public function update(UpdatePublicOfficialRequest $request, PublicOfficial $publicOfficial)
@@ -198,7 +184,7 @@ class PublicOfficialsController extends Controller
     {
         abort_if(Gate::denies('public_official_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $publicOfficial->load('current_agency', 'gtnnNumberReports', 'gtnnNumberVehicles', 'gtnnNumberInternalInvestigations', 'gtnnNumberRecords');
+        $publicOfficial->load('agency', 'officialNumberReports', 'publicOfficialRecords', 'publicOfficialVehicles', 'publicOfficialInternalInvestigations');
 
         return view('admin.publicOfficials.show', compact('publicOfficial'));
     }
